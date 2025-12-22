@@ -32,4 +32,4 @@ jobs:
 
       - name: Run Black (check only)
         run: |
-          black --check .
+          black --check --diff .
