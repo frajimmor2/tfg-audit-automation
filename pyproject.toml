@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "reporterman"
+version = "0.1.0"
+description = "A command-line tool to automate system audits with Metasploit and Searchsploit. It is supported by some ollama LLMs."
+requires-python = ">=3.12.3"
+dependencies = [
+    "typer",
+]
+
+[project.scripts]
+reporterman = "reporterman.main:app"
+
