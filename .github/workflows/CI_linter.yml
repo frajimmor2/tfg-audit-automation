@@ -1,5 +1,9 @@
 name: Lint Python Code
 
+# Permisos necesarios para hacer push con GITHUB_TOKEN
+permissions:
+  contents: write
+
 on:
   push:
     branches:
@@ -27,9 +31,20 @@ jobs:
           pip install flake8 black
 
       - name: Run Flake8
-        run: |
-          flake8 .
+        run: flake8 .
 
-      - name: Run Black (check only)
+      - name: Format code with Black
+        run: black .
+
+      - name: Commit changes if Black reformatted code
         run: |
-          black --check --diff .
+          git config --local user.name "github-actions"
+          git config --local user.email "github-actions@github.com"
+          if ! git diff --quiet; then
+            git add .
+            git commit -m "style: this man doesn't know how to code properly and needs a bot"
+            # Push usando el token de GitHub Actions
+            git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:${{ github.ref_name }}
+          else
+            echo "No formatting changes detected"
+          fi
