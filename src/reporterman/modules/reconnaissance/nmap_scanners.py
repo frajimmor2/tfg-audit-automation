@@ -1,9 +1,6 @@
 import subprocess
 import typer
-from concurrent.futures import (
-        ThreadPoolExecutor,
-        as_completed
-)
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
 def check_connectivity(target: str) -> bool:
@@ -139,7 +136,11 @@ def vuln_scan(target: str, ports: str) -> list:
     return output
 
 
-def single_ip_scan(target: str, ports: str, single_exec: True) -> dict[str, list]:  # noqa
+def single_ip_scan(
+    target: str,
+    ports: str,
+    single_exec: bool = True
+) -> dict[str, list]:  # noqa
     if check_connectivity(target):
         # From now is supposed that the connection will be ok
         # but it would raise an err anyways if there is a problem
@@ -159,7 +160,9 @@ def single_ip_scan(target: str, ports: str, single_exec: True) -> dict[str, list
         output[target] = target_scan_results
         return output
     else:
-        typer.secho(f"Couldn't connect to {target}", fg=typer.colors.RED, err=True)  # noqa
+        typer.secho(
+            f"Couldn't connect to {target}", fg=typer.colors.RED, err=True
+        )  # noqa
         if single_exec:
             raise typer.Exit(1)
 
@@ -169,8 +172,8 @@ def list_ip_scan(targets: str, ports: str) -> dict[str, list]:
 
     with ThreadPoolExecutor(max_workers=4) as executor:
         futures = {
-                executor.submit(single_ip_scan, target, ports, False): target
-                for target in targets
+            executor.submit(single_ip_scan, target, ports, False): target
+            for target in targets
         }
         for future in as_completed(futures):
             try:
@@ -178,5 +181,9 @@ def list_ip_scan(targets: str, ports: str) -> dict[str, list]:
                 print("Finished scan")
             except Exception as e:
                 typer.secho(f"Couldn't add a target to the output dict")  # noqa
-                typer.secho(f"Error processing a scan output: {e}", fg=typer.colors.RED, err=True)  # noqa
+                typer.secho(
+                    f"Error processing a scan output: {e}",
+                    fg=typer.colors.RED,
+                    err=True,
+                )  # noqa
     return output
