@@ -103,7 +103,8 @@ def test_version_scan_cpe_parser():
     h_output = hashlib.sha256(bytes_output).hexdigest()
 
     assert (
-        h_output == "b32f16543ac1548daff68c6df3fede36436defc77c9796dfad078e8608c4d1aa"  # noqa
+        h_output
+        == "b32f16543ac1548daff68c6df3fede36436defc77c9796dfad078e8608c4d1aa"  # noqa
     )
 
 
@@ -117,5 +118,6 @@ def test_vulns_scan_parser():
     h_output = hashlib.sha256(bytes_output).hexdigest()
 
     assert (
-        h_output == "a042cc98163047fe50ae7f0fa0e593271d68bfbc4d0a90ba6ce0ec922fa9bf4a"  # noqa
+        h_output
+        == "a042cc98163047fe50ae7f0fa0e593271d68bfbc4d0a90ba6ce0ec922fa9bf4a"  # noqa
     )
