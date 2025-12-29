@@ -139,7 +139,7 @@ def vuln_scan(target: str, ports: str) -> list:
     return output
 
 
-def single_ip_scan(target: str, ports: str, single_exec: True) -> dict[str, list]:
+def single_ip_scan(target: str, ports: str, single_exec: True) -> dict[str, list]:  # noqa
     if check_connectivity(target):
         # From now is supposed that the connection will be ok
         # but it would raise an err anyways if there is a problem
@@ -178,5 +178,5 @@ def list_ip_scan(targets: str, ports: str) -> dict[str, list]:
                 print("Finished scan")
             except Exception as e:
                 typer.secho(f"Couldn't add a target to the output dict")  # noqa
-                typer.secho(f"Error processing a scan output: {e}", fg=typer.colors.RED, err=True)  #noqa
+                typer.secho(f"Error processing a scan output: {e}", fg=typer.colors.RED, err=True)  # noqa
     return output
