@@ -53,20 +53,20 @@ def valid_IP_list(target: str) -> None:
 
 
 def target_validation(target: str, mode: int) -> None:
-    if mode == 0:
-        return valid_IP(target)
-    elif mode == 1:
-        return valid_domain(target)
-    else:
-        return valid_IP_list(target)
+    match mode:
+        case 0:
+            return valid_IP(target)
+        case 1:
+            return valid_domain(target)
+        case 2:
+            return valid_IP_list(target)
 
 
-def check_port(port: str) -> None:
-    if "," not in port:
-        try:
-            n = int(port)
-        except ValueError:
-            raise typer.BadParameter("Port must be an int value")
+def check_port(port: str) -> None: 
+    try:
+        n = int(port)
+    except ValueError:
+        raise typer.BadParameter("Port must be an int value")
 
     if not (0 < n <= 65535):  # Check is a logic port
         raise typer.BadParameter("Invalid port number")

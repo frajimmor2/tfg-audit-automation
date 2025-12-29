@@ -16,4 +16,7 @@ RUN venv/bin/pip install --upgrade pip && \
 # Install the cli tool
 RUN venv/bin/pip install .
 
+#Install the tool external dependencies
+RUN /app/venv/bin/reporterman setUp
+
 ENTRYPOINT ["/app/venv/bin/reporterman"]
