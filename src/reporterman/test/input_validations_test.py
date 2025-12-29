@@ -32,12 +32,11 @@ def test_neg_target_validation():
         target_validation("10.10.10.10,10.10.10.10", 2)
 
 
-
 def test_pos_target_validation():
     target_validation("34.34.34.34", 0)
     target_validation("10.0.0.3/19", 1)
     target_validation("12.12.12.12,12.12.12.11", 2)
-    
+
     assert True
 
 
