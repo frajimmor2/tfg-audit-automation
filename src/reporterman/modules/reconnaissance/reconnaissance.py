@@ -1,11 +1,11 @@
 from reporterman.modules.reconnaissance.formatters import (
     domain_target_formatter,
-    list_target_formatter
-    )
+    list_target_formatter,
+)
 from reporterman.modules.reconnaissance.nmap_scanners import (
     single_ip_scan,
-    list_ip_scan
-    )
+    list_ip_scan,
+)
 
 
 def reconnaissance(target: str, mode: int, ports: str) -> dict[str, list]:
@@ -20,7 +20,7 @@ def reconnaissance(target: str, mode: int, ports: str) -> dict[str, list]:
             targets = list_target_formatter(target)
             output = list_ip_scan(targets, ports)
 
-    '''
+    """
     OUTPUT CONTENTS EXPLAINED:
         output = Dict
         Dict[target_IP (str)] = target_info (list)
@@ -54,5 +54,5 @@ def reconnaissance(target: str, mode: int, ports: str) -> dict[str, list]:
                 len(cve) == 2
                     cve[0] == cve
                     cve[1] == link
-    '''
+    """
     return output

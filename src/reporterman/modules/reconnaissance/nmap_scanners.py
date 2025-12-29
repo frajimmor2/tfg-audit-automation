@@ -6,11 +6,8 @@ def check_connectivity(target: str) -> bool:
     cmd = ["ping", "-c", "4", "-w", "2000", target]
     try:
         output = subprocess.run(
-                cmd,
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
-                text=True
-                )
+            cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, text=True
+        )
         return output.returncode == 0  # 0 means there wasn't any errors
     except Exception as e:
         print(f"Error: {e}")
@@ -20,22 +17,18 @@ def check_connectivity(target: str) -> bool:
 def nmap_scan(cmd: list[str]) -> str:
     try:
         output = subprocess.Popen(
-                cmd,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                text=True,
-                stdin=subprocess.DEVNULL)
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            stdin=subprocess.DEVNULL,
+        )
         stdout, _ = output.communicate()
         return stdout
     except Exception as e:
         msg = f"There was a problem connecting to {cmd[-1]}"
-        typer.secho(msg,
-                    fg=typer.colors.RED,
-                    err=True
-                    )
-        typer.secho(f"Error: {e}",
-                    fg=typer.colors.RED,
-                    err=True)
+        typer.secho(msg, fg=typer.colors.RED, err=True)
+        typer.secho(f"Error: {e}", fg=typer.colors.RED, err=True)
         raise typer.Exit(1)
 
 
@@ -65,15 +58,7 @@ def os_scan(target: str) -> list:
 
 
 def get_ports_scan(target: str) -> str:
-    cmd = ["nmap",
-           "--open",
-           "-p-",
-           "--min-rate",
-           "5000",
-           "-n",
-           "-Pn",
-           target
-           ]
+    cmd = ["nmap", "--open", "-p-", "--min-rate", "5000", "-n", "-Pn", target]
     output = nmap_scan(cmd)
     output_ports = ""
     for line in output.split("\n"):
@@ -120,11 +105,7 @@ def version_scan_cpe_parser(scan_results: list[str]) -> list:
 
 
 def version_scan(target: str, ports: str) -> list:
-    cmd = ["nmap",
-           f"-p{ports}",
-           "-sVC",
-           target
-           ]
+    cmd = ["nmap", f"-p{ports}", "-sVC", target]
     raw_output = nmap_scan(cmd)
     output = version_scan_cpe_parser(raw_output.split("\n"))
     return output
@@ -148,13 +129,7 @@ def vulns_scan_parser(scan_results: list[str]) -> list:
 
 
 def vuln_scan(target: str, ports: str) -> list:
-    cmd = ["nmap",
-           "-sVC",
-           f"-p{ports}",
-           "--script",
-           "vulners",
-           target
-           ]
+    cmd = ["nmap", "-sVC", f"-p{ports}", "--script", "vulners", target]
     raw_output = nmap_scan(cmd)
     output = vulns_scan_parser(raw_output.split("\n"))
     return output
@@ -180,10 +155,7 @@ def single_ip_scan(target: str, ports: str) -> dict[str, list]:
         output[target] = target_scan_results
         return output
     else:
-        typer.secho(f"Couldn't connect to {target}",
-                    fg=typer.colors.RED,
-                    err=True
-                    )
+        typer.secho(f"Couldn't connect to {target}", fg=typer.colors.RED, err=True)
         raise typer.Exit(1)
 
 
