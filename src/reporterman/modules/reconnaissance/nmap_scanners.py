@@ -1,5 +1,9 @@
 import subprocess
 import typer
+from concurrent.futures import (
+        ThreadPoolExecutor,
+        as_completed
+)
 
 
 def check_connectivity(target: str) -> bool:
@@ -123,7 +127,7 @@ def vulns_scan_parser(scan_results: list[str]) -> list:
                 cve = info[1]
                 link = info[3]
                 output.append([cve, link])
-        except ValueError:
+        except Exception:
             pass
     return output
 
@@ -161,7 +165,18 @@ def single_ip_scan(target: str, ports: str) -> dict[str, list]:
 
 def list_ip_scan(targets: str, ports: str) -> dict[str, list]:
     output = dict()
-    for target in targets:
-        output.update(single_ip_scan(target, ports))
-        # TODO: see if i should parallelize
+    # TODO: fix no-connection problem
+    '''
+    with ThreadPoolExecutor(max_workers=4) as executor:
+        futures = {
+                executor.submit(single_ip_scan(target, ports)): target
+                for target in targets
+        }
+        for future in as_completed(futures):
+            try:
+                output.update(future.result())
+                print("Finished scan")
+            except Exception as e:
+                typer.secho(f"Error: {e}", fg=typer.colors.RED, err=True)
+    '''
     return output

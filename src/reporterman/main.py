@@ -34,7 +34,7 @@ def run(
                 "The mode options specifies which \
                     target type will be processed.\n"
                 "mode == 0: single IP\n"
-                "mode == 1: IP domin\n"
+                "mode == 1: IP domain\n"
                 "mode == 2: list of IPs\n"
             ),
             callback=mode_validation,

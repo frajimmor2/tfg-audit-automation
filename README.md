@@ -15,8 +15,11 @@ docker build -t reporterman .
 Usage:
 
 ```bash
-docker run --rm reporterman --help
+docker run --cap-add=NET_RAW --cap-add=NET_ADMIN --rm reporterman --help
 ```
+
+> [!IMPORTANT]
+> To probe the tool against a local VM you must add --network host
 
 ### Local Installation
 
