@@ -25,7 +25,7 @@ def test_neg_domain_target_formatter():
 
 def test_pos_domain_target_formatter():
     output = domain_target_formatter("192.0.0.0/30")
-    expected = ["192.0.0.1","192.0.0.2"]
+    expected = ["192.0.0.1", "192.0.0.2"]
 
     assert output == expected
 
@@ -33,7 +33,7 @@ def test_pos_domain_target_formatter():
 def test_list_target_formatter():
     value = "10.10.10.10,10.10.10.11"
     output = list_target_formatter(value)
-    expected = ["10.10.10.10","10.10.10.11"]
+    expected = ["10.10.10.10", "10.10.10.11"]
 
     assert output == expected
 
@@ -85,7 +85,7 @@ def test_nmap_scan_exception(monkeypatch):
         return DummyPopen(raise_exc=True)
 
     monkeypatch.setattr(subprocess, "Popen", dummy_popen)
-    
+
     with pytest.raises(typer.Exit):
         nmap_scan(["nmap", "-sVC", "192.168.0.1"])
 
@@ -99,7 +99,7 @@ def test_version_scan_cpe_parser():
     bytes_output = json_output.encode("utf-8")
     h_output = hashlib.sha256(bytes_output).hexdigest()
 
-    assert h_output == 'b32f16543ac1548daff68c6df3fede36436defc77c9796dfad078e8608c4d1aa'
+    assert h_output == 'b32f16543ac1548daff68c6df3fede36436defc77c9796dfad078e8608c4d1aa'  # noqa
 
 
 def test_vulns_scan_parser():
@@ -111,4 +111,4 @@ def test_vulns_scan_parser():
     bytes_output = json_output.encode("utf-8")
     h_output = hashlib.sha256(bytes_output).hexdigest()
 
-    assert h_output == 'a042cc98163047fe50ae7f0fa0e593271d68bfbc4d0a90ba6ce0ec922fa9bf4a'
+    assert h_output == 'a042cc98163047fe50ae7f0fa0e593271d68bfbc4d0a90ba6ce0ec922fa9bf4a'  # noqa
