@@ -12,7 +12,7 @@ def check_connectivity(target: str) -> bool:
                 text=True
                 )
         return output.returncode == 0  # 0 means there wasn't any errors
-    except Exception:
+    except Exception as e:
         print(f"Error: {e}")
         return False
 
@@ -43,10 +43,10 @@ def os_scan(target: str) -> list:
     cmd = ["nmap", "-sV", "-O", target]
     scan_output = nmap_scan(cmd)
     # Filter the output
-    listed_scan= scan_output.split("\n")
+    listed_scan = scan_output.split("\n")
     # CPE Values: 0 = vendor 1 = product 2 = version 3 = other
     vendor = product = version = other = ""
-    for line in listed_scan: 
+    for line in listed_scan:
         match line:
             case _ if "OS CPE:" in line:
                 parts = line.split(":")
@@ -64,7 +64,7 @@ def os_scan(target: str) -> list:
     return output_cpe
 
 
-def get_ports_scan(target :str) -> str:
+def get_ports_scan(target: str) -> str:
     cmd = ["nmap",
            "--open",
            "-p-",
@@ -81,12 +81,13 @@ def get_ports_scan(target :str) -> str:
             port_info = line.split("/")
             port = port_info[0]
             output_ports = output_ports + port + ","
-        else: pass
+        else:
+            pass
     return output_ports[:-1]
 
 
 def version_scan_cpe_parser(scan_results: list[str]) -> list:
-    output_cpe = []  # CPE list 
+    output_cpe = []  # CPE list
     other = ""
     current_cpe = None
     for line in scan_results:
@@ -119,11 +120,11 @@ def version_scan_cpe_parser(scan_results: list[str]) -> list:
 
 
 def version_scan(target: str, ports: str) -> list:
-    cmd=["nmap",
-         f"-p{ports}",
-         "-sVC", 
-         target
-        ]
+    cmd = ["nmap",
+           f"-p{ports}",
+           "-sVC",
+           target
+           ]
     raw_output = nmap_scan(cmd)
     output = version_scan_cpe_parser(raw_output.split("\n"))
     return output
@@ -141,19 +142,19 @@ def vulns_scan_parser(scan_results: list[str]) -> list:
                 cve = info[1]
                 link = info[3]
                 output.append([cve, link])
-        except:
+        except ValueError:
             pass
     return output
 
 
 def vuln_scan(target: str, ports: str) -> list:
-    cmd=["nmap",
-         "-sVC",
-         f"-p{ports}",
-         "--script",
-         "vulners",
-         target
-         ]
+    cmd = ["nmap",
+           "-sVC",
+           f"-p{ports}",
+           "--script",
+           "vulners",
+           target
+           ]
     raw_output = nmap_scan(cmd)
     output = vulns_scan_parser(raw_output.split("\n"))
     return output
@@ -168,13 +169,14 @@ def single_ip_scan(target: str, ports: str) -> dict[str, list]:
         # Add every scan result
         target_scan_results.append(os_scan(target))  # OS cpe
         if not ports:
-            ports =  get_ports_scan(target)
+            ports = get_ports_scan(target)
 
         version_scan_results = version_scan(target, ports)
 
         target_scan_results.append(version_scan_results[0])  # Services cpe
         target_scan_results.append(version_scan_results[1])  # Other
-        target_scan_results.append(vuln_scan(target, ports)) # Detected vulnerabilities
+        list_cve = vuln_scan(target, ports)
+        target_scan_results.append(list_cve)  # Detected vulnerabilities
         output[target] = target_scan_results
         return output
     else:
@@ -189,5 +191,5 @@ def list_ip_scan(targets: str, ports: str) -> dict[str, list]:
     output = dict()
     for target in targets:
         output.update(single_ip_scan(target, ports))
-        # TODO: see if i should parallelize 
+        # TODO: see if i should parallelize
     return output

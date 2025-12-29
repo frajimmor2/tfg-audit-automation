@@ -62,7 +62,7 @@ def target_validation(target: str, mode: int) -> None:
             return valid_IP_list(target)
 
 
-def check_port(port: str) -> None: 
+def check_port(port: str) -> None:
     try:
         n = int(port)
     except ValueError:

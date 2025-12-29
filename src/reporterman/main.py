@@ -66,11 +66,12 @@ def run(
 @app.command(
         name="setUp",
         help="Download all the required external dependencies"
-                " such as nmap, metasploit or searchsploit."
-                " It also creates the required llms")
+             " such as nmap, metasploit or searchsploit."
+             " It also creates the required llms")
 def setUp():
     print("Installing all the ollama models and dependencies, please wait...")
     set_up_dependencies()
+
 
 if __name__ == "__main__":
     app()
