@@ -10,7 +10,7 @@ def check_connectivity(target: str) -> bool:
     cmd = ["ping", "-c", "4", "-w", "2000", target]
     try:
         output = subprocess.run(
-            cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, text=True
+            cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, text=True  # noqa
         )
         return output.returncode == 0  # 0 means there wasn't any errors
     except Exception as e:
@@ -139,7 +139,7 @@ def vuln_scan(target: str, ports: str) -> list:
     return output
 
 
-def single_ip_scan(target: str, ports: str) -> dict[str, list]:
+def single_ip_scan(target: str, ports: str, single_exec: True) -> dict[str, list]:
     if check_connectivity(target):
         # From now is supposed that the connection will be ok
         # but it would raise an err anyways if there is a problem
@@ -159,17 +159,17 @@ def single_ip_scan(target: str, ports: str) -> dict[str, list]:
         output[target] = target_scan_results
         return output
     else:
-        typer.secho(f"Couldn't connect to {target}", fg=typer.colors.RED, err=True)
-        raise typer.Exit(1)
+        typer.secho(f"Couldn't connect to {target}", fg=typer.colors.RED, err=True)  # noqa
+        if single_exec:
+            raise typer.Exit(1)
 
 
 def list_ip_scan(targets: str, ports: str) -> dict[str, list]:
     output = dict()
-    # TODO: fix no-connection problem
-    '''
+
     with ThreadPoolExecutor(max_workers=4) as executor:
         futures = {
-                executor.submit(single_ip_scan(target, ports)): target
+                executor.submit(single_ip_scan, target, ports, False): target
                 for target in targets
         }
         for future in as_completed(futures):
@@ -177,6 +177,6 @@ def list_ip_scan(targets: str, ports: str) -> dict[str, list]:
                 output.update(future.result())
                 print("Finished scan")
             except Exception as e:
-                typer.secho(f"Error: {e}", fg=typer.colors.RED, err=True)
-    '''
+                typer.secho(f"Couldn't add a target to the output dict")  # noqa
+                typer.secho(f"Error processing a scan output: {e}", fg=typer.colors.RED, err=True)  #noqa
     return output
