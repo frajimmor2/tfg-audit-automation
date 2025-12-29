@@ -1,8 +1,8 @@
 from reporterman.input_validations import (
-        mode_validation,
-        target_validation,
-        ports_validation
-        )
+    mode_validation,
+    target_validation,
+    ports_validation,
+)
 import typer
 import pytest
 

@@ -52,9 +52,7 @@ def valid_IP_list(target: str) -> None:
     for value in target.split(","):
         valid_IP(value)
         if value in s:
-            raise typer.BadParameter(
-                "Duplicated values are not allowed"
-            )
+            raise typer.BadParameter("Duplicated values are not allowed")
         s.add(value)
 
 

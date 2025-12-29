@@ -137,9 +137,7 @@ def vuln_scan(target: str, ports: str) -> list:
 
 
 def single_ip_scan(
-    target: str,
-    ports: str,
-    single_exec: bool = True
+    target: str, ports: str, single_exec: bool = True
 ) -> dict[str, list]:  # noqa
     if check_connectivity(target):
         # From now is supposed that the connection will be ok
