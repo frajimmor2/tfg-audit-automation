@@ -29,5 +29,5 @@ jobs:
       # Step 4: Run the pytest test suite (ignoring Selenium tests)
       - name: Run Tests
         run: |
-          cd src
+          export PYTHONPATH=$PYTHONPATH:$(pwd)/src
           pytest .
