@@ -38,7 +38,7 @@ def get_value(get_cmd: str) -> None:
 
 
 # fmt: off
-def insert_target(target: str, target_info : list) -> None:
+def insert_target(target: str, target_info: list) -> None:
     cmd = f"""
     INSERT INTO target (
             ip_addr,
@@ -56,6 +56,7 @@ def insert_target(target: str, target_info : list) -> None:
     """
     insert_value(cmd)
 
+
 # Now is for test purposes only
 def get_target(target: str) -> dict:
     get_cmd = f"""
@@ -67,7 +68,7 @@ def get_target(target: str) -> dict:
     return target
 
 
-def get_target_id(target: str) -> int: 
+def get_target_id(target: str) -> int:
     get_cmd = f"""
     SELECT t.id
     FROM target t
@@ -133,7 +134,7 @@ def get_vulnerability(target: int, cve: str) -> dict:
     get_cmd = f"""
     SELECT *
     FROM vulnerability v
-    WHERE 
+    WHERE
     v.target_id = {target}
     AND
     v.cve = '{cve}';
@@ -146,7 +147,7 @@ def update_vulnerability(vuln: int) -> None:
     update_cmd = f"""
     UPDATE vulnerability
     SET exploited = TRUE
-    WHERE 
+    WHERE
     id = {vuln};
     """
     insert_value(update_cmd)
@@ -163,6 +164,7 @@ def get_vulnerability_id(target: int, cve: str) -> int:
     """
     id = get_value(get_cmd)
     return id
+
 
 def insert_exploit(vuln: int, exploit: list) -> None:
     insert_cmd = f"""
@@ -192,6 +194,7 @@ def get_exploit(vuln: int, name: str) -> dict:
     """
     exploit = get_value(get_cmd)
     return exploit
+
 
 def update_exploit(vuln: int, name: str) -> None:
     update_cmd = f"""

@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS vulnerability (
 
         FOREIGN KEY(target_id)
             REFERENCES target (id)
-            ON DELETE CASCADE 
+            ON DELETE CASCADE
 );
 """
 
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS exploit (
         source TEXT NOT NULL,
         payload TEXT,
         success BOOL NOT NULL,
-        
+
         FOREIGN KEY(vuln_id)
             REFERENCES vulnerability (id)
             ON DELETE CASCADE
