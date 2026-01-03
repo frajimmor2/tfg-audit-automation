@@ -1,10 +1,10 @@
 import sqlite3
 from pathlib import Path
 from reporterman.database.models import (
-        CREATE_TARGET_TABLE,
-        CREATE_SOFTWARE_TABLE,
-        CREATE_VULNERABILITY_TABLE,
-        CREATE_EXPLOIT_TABLE
+    CREATE_TARGET_TABLE,
+    CREATE_SOFTWARE_TABLE,
+    CREATE_VULNERABILITY_TABLE,
+    CREATE_EXPLOIT_TABLE,
 )
 
 DB_BASE_DIR = Path(__file__).resolve().parent

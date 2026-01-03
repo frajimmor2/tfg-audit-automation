@@ -1,20 +1,20 @@
 import pytest
 import reporterman.database.database as db
 from reporterman.database.database import (
-        init_db,
-        insert_target,
-        get_target,
-        insert_software,
-        get_software,
-        get_target_id,
-        get_vulnerability,
-        insert_vulnerability,
-        update_vulnerability,
-        get_vulnerability_id,
-        insert_exploit,
-        get_exploit,
-        update_exploit
-        )
+    init_db,
+    insert_target,
+    get_target,
+    insert_software,
+    get_software,
+    get_target_id,
+    get_vulnerability,
+    insert_vulnerability,
+    update_vulnerability,
+    get_vulnerability_id,
+    insert_exploit,
+    get_exploit,
+    update_exploit,
+)
 
 
 @pytest.fixture
@@ -32,12 +32,7 @@ def temp_db(tmp_path, monkeypatch):
 
 def test_insert_and_get_target(temp_db):
     target = "192.168.1.10"
-    target_info = [
-        "linux",
-        "linux_kernel",
-        "2.6",
-        "lorem ipsum"
-    ]
+    target_info = ["linux", "linux_kernel", "2.6", "lorem ipsum"]
 
     # Test
     insert_target(target, target_info)
@@ -66,11 +61,7 @@ def test_get_target_id(temp_db):
 
 
 def test_insert_and_get_software(temp_db):
-    soft = [
-            "product",
-            "version",
-            "other_info",
-            "port"]
+    soft = ["product", "version", "other_info", "port"]
 
     # Test
     insert_software(1, soft, False)
@@ -90,9 +81,7 @@ def test_insert_and_get_software(temp_db):
 
 
 def test_insert_update_and_get_vuln(temp_db):
-    vuln = [
-            "cve",
-            "https://link"]
+    vuln = ["cve", "https://link"]
     # Test
     insert_vulnerability(1, vuln, "lorem ipsum")
     result = get_vulnerability(1, vuln[0])
@@ -124,9 +113,7 @@ def test_insert_update_and_get_vuln(temp_db):
 
 
 def test_get_vuln_id(temp_db):
-    vuln = [
-            "cve",
-            "https://link"]
+    vuln = ["cve", "https://link"]
     insert_vulnerability(1, vuln, "lorem ipsum")
 
     # Test
@@ -139,14 +126,9 @@ def test_get_vuln_id(temp_db):
 
 
 def test_insert_update_and_get_exploit(temp_db):
-    vuln = [
-            "cve",
-            "https://link"]
+    vuln = ["cve", "https://link"]
     insert_vulnerability(1, vuln, "lorem ipsum")
-    exploit = [
-            "exploit1",
-            "metasploit",
-            "payload"]
+    exploit = ["exploit1", "metasploit", "payload"]
     # Test
     insert_exploit(1, exploit)
     result = get_exploit(1, exploit[0])
