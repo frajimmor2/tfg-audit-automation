@@ -7,6 +7,8 @@ from reporterman.input_validations import (
 )
 from reporterman.modules.reconnaissance.reconnaissance import reconnaissance
 from reporterman.utils.install_dependencies import set_up_dependencies
+from reporterman.modules.data_analysis.data_analysis import data_analysis
+from reporterman.database.database import init_db
 
 
 app = typer.Typer()
@@ -56,7 +58,9 @@ def run(
     ports_validation(ports)
     print("Running reconnaissance module")
     scan_output = reconnaissance(target, mode, ports)
-    print(scan_output)
+    init_db()
+    selected_exploits = data_analysis(scan_output)
+    print(selected_exploits)
 
 
 @app.command(

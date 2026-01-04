@@ -75,11 +75,12 @@ def get_target_id(target: str) -> int:
     WHERE t.ip_addr = '{target}';
     """
     id = get_value(get_cmd)
+    id = id[0]["id"]
     return id
 
 
 # Now is for test purposes only
-def insert_software(target: int, soft: str, obs: bool) -> None:
+def insert_software(target: int, soft: list, obs: bool) -> None:
     insert_cmd = f"""
     INSERT INTO software (
             product,
@@ -112,7 +113,7 @@ def get_software(target: int, port: str) -> dict:
     return software
 
 
-def insert_vulnerability(target: str, vuln: list, desc: str) -> None:  # noqa
+def insert_vulnerability(target: int, vuln: list, desc: str) -> None:  # noqa
     insert_cmd = f"""
     INSERT INTO vulnerability (
             cve,
@@ -163,6 +164,7 @@ def get_vulnerability_id(target: int, cve: str) -> int:
     v.cve = '{cve}';
     """
     id = get_value(get_cmd)
+    id = id[0]["id"]
     return id
 
 
