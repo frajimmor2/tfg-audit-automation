@@ -14,7 +14,7 @@ def data_analysis(input_info: dict) -> dict:
         exploits = set()
         target_info = input_info[target][0]
         insert_target(target, target_info)
-        other_info = input_info[target][2]
+        # other_info = input_info[target][2]
         target_id = get_target_id(target)
 
         for soft in input_info[target][1]:
@@ -26,7 +26,6 @@ def data_analysis(input_info: dict) -> dict:
             desc = "lorem_ipsum"  # CVE_descriptor
             insert_vulnerability(target_id, vuln, desc)
 
-        output[target] = exploits 
-
+        output[target] = exploits
 
     return output
