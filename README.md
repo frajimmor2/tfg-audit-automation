@@ -5,7 +5,15 @@ A command-line tool to automate system audits with Metasploit and Searchsploit. 
 ## Installation Guide
 
 ### Local Installation
+>[!IMPORTANT]
+>You must have python 3.12.3 or higher
 
+You can install it by running:
+```bash
+sudo apt install python3.12 -y
+```
+
+#### Installation
 ```bash
 git clone https://github.com/frajimmor2/tfg-audit-automation.git
 cd tfg-audit-automation
