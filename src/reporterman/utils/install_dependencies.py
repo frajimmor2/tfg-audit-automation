@@ -12,6 +12,7 @@ CMDs.append(["apt", "install", "-y", "nmap"])
 CMDs.append(["snap", "install", "ollama"])
 CMDs.append(["ollama", "create", "soft_obs_analzer", "-f", f"{soft_obs_path}"])
 
+
 def install_dependency(cmd: list[str]) -> None:
     try:
         subprocess.run(
@@ -28,6 +29,6 @@ def install_dependency(cmd: list[str]) -> None:
 
 
 def set_up_dependencies() -> None:
-    
+
     for cmd in CMDs:
         install_dependency(cmd)
