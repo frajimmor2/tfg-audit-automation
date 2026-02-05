@@ -28,6 +28,7 @@ git clone https://github.com/frajimmor2/tfg-audit-automation.git
 cd tfg-audit-automation
 pip install -r requirements.txt
 pip install -e .
+sudo $(which reporterman) setUp
 ```
 
 Usage:

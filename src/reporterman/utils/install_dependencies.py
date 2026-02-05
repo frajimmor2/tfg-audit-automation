@@ -1,13 +1,16 @@
 import subprocess
 import typer
+from importlib.resources import files
 
+soft_obs_path = files("reporterman.utils.llms") / "soft_obs_analyzer"
 
 # List of commands that will install all the dependencies
 CMDs = []
 CMDs.append(["apt", "update", "-y"])
 CMDs.append(["apt-get", "install", "-y", "iputils-ping"])
 CMDs.append(["apt", "install", "-y", "nmap"])
-
+CMDs.append(["snap", "install", "ollama"])
+CMDs.append(["ollama", "create", "soft_obs_analzer", "-f", f"{soft_obs_path}"])
 
 def install_dependency(cmd: list[str]) -> None:
     try:
@@ -25,5 +28,6 @@ def install_dependency(cmd: list[str]) -> None:
 
 
 def set_up_dependencies() -> None:
+    
     for cmd in CMDs:
         install_dependency(cmd)
