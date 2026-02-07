@@ -6,10 +6,11 @@ from reporterman.input_validations import (
     ports_validation,
 )
 from reporterman.modules.reconnaissance.reconnaissance import reconnaissance
-from reporterman.utils.install_dependencies import set_up_dependencies
 from reporterman.modules.data_analysis.data_analysis import data_analysis
 from reporterman.database.database import init_db
-
+from reporterman.ollama_models.llm_handler import soft_obs_analyzer
+import ollama
+import time
 
 app = typer.Typer()
 
@@ -64,14 +65,18 @@ def run(
 
 
 @app.command(
-    name="setUp",
-    help="Download all the required external dependencies"
-    " such as nmap, metasploit or searchsploit."
-    " It also creates the required llms",
+    name="llms-time-exec-test",
+    help="Check how fast works the ollama models"
 )
-def setUp():
-    print("Installing all the ollama models and dependencies, please wait...")
-    set_up_dependencies()
+def llm_time_execution_test():
+    client = ollama.Client()
+    start = time.time()
+    out1 = soft_obs_analyzer("service: telnet   other_info: ", client)
+    out2 = soft_obs_analyzer("service: rexec   other_info: ", client)
+    total = time.time() - start
+    print("Expected soft analyzer outputs 1, 1")
+    print(f"Actual outputs: {out1}, {out2}")
+    print(f"Total execution time: {total}")
 
 
 if __name__ == "__main__":
