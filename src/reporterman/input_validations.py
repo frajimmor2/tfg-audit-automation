@@ -9,24 +9,18 @@ def mode_validation(mode: int) -> int:
 
 def valid_IP(target: str) -> None:
     if target.count(".") != 3:
-        raise typer.BadParameter(
-            f"{target} is not a valid IP. \
-                    Provide the plain IP address, not the CIDR"
-        )
+        raise typer.BadParameter(f"{target} is not a valid IP. \
+                    Provide the plain IP address, not the CIDR")
 
     for num in target.split("."):
         try:
             n = int(num)
         except ValueError:
-            raise typer.BadParameter(
-                f"{target} is not a valid IP. \
-                        Provide the plain IP address, not the CIDR"
-            )
+            raise typer.BadParameter(f"{target} is not a valid IP. \
+                        Provide the plain IP address, not the CIDR")
         if not (0 <= n <= 255):
-            raise typer.BadParameter(
-                f"{target} is not a valid IP. \
-                        Provide the plain IP address, not the CIDR"
-            )
+            raise typer.BadParameter(f"{target} is not a valid IP. \
+                        Provide the plain IP address, not the CIDR")
 
 
 def valid_domain(target: str) -> None:
@@ -44,10 +38,8 @@ def valid_domain(target: str) -> None:
 
 def valid_IP_list(target: str) -> None:
     if "," not in target:
-        raise typer.BadParameter(
-            "The provided list of IP addresses must \
-                    follow this pattern: IP,IP,IP,IP"
-        )
+        raise typer.BadParameter("The provided list of IP addresses must \
+                    follow this pattern: IP,IP,IP,IP")
     s = set()
     for value in target.split(","):
         valid_IP(value)
