@@ -12,7 +12,6 @@ ollama==0.6.1
 pydantic==2.12.5
 pydantic_core==2.41.5
 Pygments==2.19.2
--e git+ssh://git@github.com/frajimmor2/tfg-audit-automation.git@4a4142e3a81cb96e42d622bba4d51ca4fac91675#egg=reporterman
 rich==14.2.0
 shellingham==1.5.4
 typer==0.20.0
