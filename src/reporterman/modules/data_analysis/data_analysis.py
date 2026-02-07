@@ -14,18 +14,23 @@ def data_analysis(input_info: dict) -> dict:
         exploits = set()
         target_info = input_info[target][0]
         insert_target(target, target_info)
-        # other_info = input_info[target][2]
+        other_info = input_info[target][2]
         target_id = get_target_id(target)
+        detected_vulns = set()
 
         for soft in input_info[target][1]:
-            obs = False  # Data_obs_analyzer(soft)
+            obs = False  # LLM: Data_obs_analyzer(soft)
             # Store the info
             insert_software(target_id, soft, obs)
+            # LLM: exploit_selector
+            # exploits.append([response, ""])
 
         for vuln in input_info[target][3]:
-            desc = "lorem_ipsum"  # CVE_descriptor
+            desc = "lorem_ipsum"  # LLM: cve_descriptor
+            # check vuln link - else https://nvd.nist.gov/vuln/detail/{CVE}
             insert_vulnerability(target_id, vuln, desc)
-
+            # LLM: vuln input exploit selector
+            # exploits.append([response, vuln[0]])
         output[target] = exploits
 
     return output
