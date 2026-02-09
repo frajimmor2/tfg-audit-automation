@@ -60,8 +60,7 @@ def run(
     print(selected_exploits)
 
 
-@app.command(name="llms-time-exec-test",
-             help="Check how fast works the ollama models")
+@app.command(name="llms-time-exec-test", help="Check how fast works the ollama models")
 def llm_time_execution_test():
     client = ollama.Client()
     start = time.time()
