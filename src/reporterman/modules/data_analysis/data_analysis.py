@@ -17,10 +17,10 @@ def data_analysis(input_info: dict) -> dict:
         # other_info = input_info[target][2]
         target_id = get_target_id(target)
 
-        for soft in input_info[target][1]:
+        for cpe in input_info[target][1]:
             obs = False  # LLM: Data_obs_analyzer(soft)
             # Store the info
-            insert_software(target_id, soft, obs)
+            insert_software(target_id, cpe, obs)
             # LLM: exploit_selector
             # exploits.append([response, ""])
 
