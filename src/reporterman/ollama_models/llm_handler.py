@@ -8,7 +8,7 @@ EACH TIME THIS IS CALLED, THE CLIENT WILL BE ALWAYS CREATED
 def soft_obs_handler(input: str, client) -> int:
 
     try:
-        return int(client.generate(model="soft_obs_analyzer", prompt=input).response)
+        return int(client.generate(model="soft_obs_analyzer", prompt=input).response)  # noqa
     except Exception as e:
         typer.secho(
             f"There was a problem evaluating {input}",

@@ -14,9 +14,8 @@ def data_analysis(input_info: dict) -> dict:
         exploits = set()
         target_info = input_info[target][0]
         insert_target(target, target_info)
-        other_info = input_info[target][2]
+        # other_info = input_info[target][2]
         target_id = get_target_id(target)
-        detected_vulns = set()
 
         for soft in input_info[target][1]:
             obs = False  # LLM: Data_obs_analyzer(soft)
