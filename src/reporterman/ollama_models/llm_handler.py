@@ -32,7 +32,9 @@ def exploit_selector_soft(cpe: str, other_info: str, client) -> list:
     input = f"{cpe[3]} {cpe[0]} {cpe[1]} {cpe[2]}, other_info: {other_info}."
 
     try:
-        return client.generate(model="exploit_selector_soft", prompt=input).response
+        return client.generate(
+                model="exploit_selector_soft",
+                prompt=input).response
     except Exception as e:
         typer.secho(
             f"There was a problem evaluating {input}",

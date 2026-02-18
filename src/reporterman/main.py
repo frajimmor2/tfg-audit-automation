@@ -8,7 +8,10 @@ from reporterman.input_validations import (
 from reporterman.modules.reconnaissance.reconnaissance import reconnaissance
 from reporterman.modules.data_analysis.data_analysis import data_analysis
 from reporterman.database.database import init_db
-from reporterman.ollama_models.llm_handler import soft_obs_analyzer, exploit_selector_soft
+from reporterman.ollama_models.llm_handler import (
+        soft_obs_analyzer,
+        exploit_selector_soft,
+        )
 import ollama
 import time
 
@@ -60,7 +63,8 @@ def run(
     print(selected_exploits)
 
 
-@app.command(name="llms-time-exec-test", help="Check how fast works the ollama models")
+@app.command(name="llms-time-exec-test",
+             help="Check how fast works the ollama models")
 def llm_time_execution_test():
     client = ollama.Client()
     start = time.time()
@@ -70,9 +74,9 @@ def llm_time_execution_test():
     print("Expected soft analyzer outputs 1, 1")
     print(f"Actual outputs: {out1}, {out2}")
     print(f"Total execution time: {total}")
-    
+
     start = time.time()
-    out3 = exploit_selector_soft(["21/tcp","vsftpd","2.3.4","ftp-syst: \n|   STAT: \n| FTP server status:\n|      Connected to 192.168.1.13\n|      Logged in as ftp\n|      TYPE: ASCII\n|      No session bandwidth limit\n|      Session timeout in seconds is 300\n|      Control connection is plain text\n|      Data connections will be plain text\n|      vsFTPd 2.3.4 - secure, fast, stable\n|_End of status\n|_ftp-anon: Anonymous FTP login allowed (FTP code 230)]"], "", client)
+    out3 = exploit_selector_soft(["21/tcp","vsftpd","2.3.4","ftp-syst: \n|   STAT: \n| FTP server status:\n|      Connected to 192.168.1.13\n|      Logged in as ftp\n|      TYPE: ASCII\n|      No session bandwidth limit\n|      Session timeout in seconds is 300\n|      Control connection is plain text\n|      Data connections will be plain text\n|      vsFTPd 2.3.4 - secure, fast, stable\n|_End of status\n|_ftp-anon: Anonymous FTP login allowed (FTP code 230)]"], "", client)  # noqa
     print(out3)
     total = time.time() - start
     print(f"Total execution time: {total}")
