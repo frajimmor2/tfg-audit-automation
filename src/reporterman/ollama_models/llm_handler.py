@@ -28,11 +28,12 @@ def soft_obs_analyzer(input: str, client) -> int:
     return round(obs_confidence)
 
 
-def exploit_selector_soft(cpe: str, other_info: str, client) -> list:
-    input = f"{cpe[3]} {cpe[0]} {cpe[1]} {cpe[2]}, other_info: {other_info}."
+def exploit_selector_vuln(cve: str, client) -> list:
 
     try:
-        return client.generate(model="exploit_selector_soft", prompt=input).response
+        response = client.generate(model="exploit_selector_vuln", prompt=cve).response  # noqa
+        parsed_response = client.generate(model="llm_list_parser", prompt=response).response  # noqa
+        return parsed_response
     except Exception as e:
         typer.secho(
             f"There was a problem evaluating {input}",
