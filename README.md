@@ -14,6 +14,7 @@ chmod +x install_dependencies.sh
 sudo ./install_dependencies.sh
 ollama create soft_obs_analyzer -f llms/soft_obs_analyzer
 ollama create exploit_selector_soft -f llms/exploit_selector_vuln
+ollama create exploit_selector_soft -f llms/exploit_selector_soft
 ollama create llm_list_parser -f llms/llm_list_parser
 pip install -r requirements.txt
 pip install -e .
@@ -24,6 +25,7 @@ If you just wat to reinstall the models, just run this:
 ```bash
 ollama create soft_obs_analyzer -f llms/soft_obs_analyzer
 ollama create exploit_selector_soft -f llms/exploit_selector_vuln
+ollama create exploit_selector_soft -f llms/exploit_selector_soft
 ollama create llm_list_parser -f llms/llm_list_parser
 ```
 

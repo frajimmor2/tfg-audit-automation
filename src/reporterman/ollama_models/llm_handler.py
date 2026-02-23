@@ -50,3 +50,28 @@ def exploit_selector_vuln(cve: str, client) -> list:
         )
         typer.secho(f"Error: {e}", fg=typer.colors.RED, err=True)
         raise typer.Exit(1)
+
+
+def exploit_selector_soft(soft: str, client) -> list:
+
+    input = " ".join(soft)
+    try:
+        response = client.generate(
+            model="exploit_selector_soft", prompt=input
+        ).response  # noqa
+        parsed_response = client.generate(
+            model="llm_list_parser", prompt=response
+        ).response  # noqa
+        parsed_response = parsed_response.split(",")
+        output = [
+            exploit.strip().replace("_", " ") for exploit in parsed_response
+        ]  # noqa
+        return output
+    except Exception as e:
+        typer.secho(
+            f"There was a problem evaluating {input}",
+            fg=typer.colors.RED,
+            err=True,  # noqa
+        )
+        typer.secho(f"Error: {e}", fg=typer.colors.RED, err=True)
+        raise typer.Exit(1)
