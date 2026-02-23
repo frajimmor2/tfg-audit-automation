@@ -33,7 +33,9 @@ def exploit_selector_vuln(cve: str, client) -> list:
     try:
         response = client.generate(model="exploit_selector_vuln", prompt=cve).response  # noqa
         parsed_response = client.generate(model="llm_list_parser", prompt=response).response  # noqa
-        return parsed_response
+        parsed_response = parsed_response.split(",")
+        output = [exploit.strip().replace("_"," ") for exploit in parsed_response]  # noqa
+        return output
     except Exception as e:
         typer.secho(
             f"There was a problem evaluating {input}",
