@@ -31,10 +31,16 @@ def soft_obs_analyzer(input: str, client) -> int:
 def exploit_selector_vuln(cve: str, client) -> list:
 
     try:
-        response = client.generate(model="exploit_selector_vuln", prompt=cve).response  # noqa
-        parsed_response = client.generate(model="llm_list_parser", prompt=response).response  # noqa
+        response = client.generate(
+            model="exploit_selector_vuln", prompt=cve
+        ).response  # noqa
+        parsed_response = client.generate(
+            model="llm_list_parser", prompt=response
+        ).response  # noqa
         parsed_response = parsed_response.split(",")
-        output = [exploit.strip().replace("_"," ") for exploit in parsed_response]  # noqa
+        output = [
+            exploit.strip().replace("_", " ") for exploit in parsed_response
+        ]  # noqa
         return output
     except Exception as e:
         typer.secho(
