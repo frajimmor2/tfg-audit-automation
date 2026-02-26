@@ -7,14 +7,14 @@ from reporterman.database.database import (
 from dotenv import load_dotenv
 import os
 import requests
-import hashlib
 
 load_dotenv()
 
 API_KEY = os.getenv("API_KEY")
 
+
 def get_cve_data(cve_id: str):
- 
+
     headers = {
         "User-Agent": "Reporterman/1.0 (Security Research Tool)",
         "apiKey": API_KEY

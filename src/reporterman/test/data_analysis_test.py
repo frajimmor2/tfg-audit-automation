@@ -1,9 +1,8 @@
-import pytest
-import time
 import hashlib
 from reporterman.modules.data_analysis.data_analysis import (
         get_cve_description
         )
+
 
 def test_get_cve_description():
     desc1 = get_cve_description("CVE-2019-19234")
