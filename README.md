@@ -5,11 +5,21 @@ A command-line tool to automate system audits with Metasploit and Searchsploit. 
 ## Installation Guide
 
 ### Local Installation
+> [!WARNING]
+> First of all, you must obtain an API KEY from NIST
+> You can request one here: https://nvd.nist.gov/developers/request-an-api-key
+>
+> Remember to add the API KEY to your local env
 
-#### Installation
 ```bash
 git clone https://github.com/frajimmor2/tfg-audit-automation.git
 cd tfg-audit-automation
+cp .env.example .env
+```
+
+After modifing the enviroment you can coninue with the installation.
+
+```bash
 chmod +x install_dependencies.sh
 sudo ./install_dependencies.sh
 ollama create soft_obs_analyzer -f llms/soft_obs_analyzer
