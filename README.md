@@ -6,7 +6,8 @@ A command-line tool to automate system audits with Metasploit and Searchsploit. 
 
 ### Local Installation
 > [!WARNING]
-> First of all, you must obtain an API KEY from NIST
+> First of all, you must obtain an API KEY from NIST.
+>
 > You can request one here: https://nvd.nist.gov/developers/request-an-api-key
 >
 > Remember to add the API KEY to your local env
