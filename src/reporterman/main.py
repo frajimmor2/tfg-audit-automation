@@ -11,6 +11,7 @@ from reporterman.database.database import init_db
 from reporterman.ollama_models.llm_handler import (
     soft_obs_analyzer,
     exploit_selector_vuln,
+    exploit_selector_soft,
 )
 import ollama
 import time
@@ -64,7 +65,7 @@ def run(
 
 
 @app.command(
-    name="llms-time-exec-test", help="Check how fast works the ollama models"
+    name="llms-time-exec-test", help="Check how fast works the ollama models"  # noqa
 )  # noqa
 def llm_time_execution_test():
     client = ollama.Client()
@@ -76,12 +77,22 @@ def llm_time_execution_test():
     print(f"Actual outputs: {out1}, {out2}")
     print(f"Total execution time: {total}")
 
+    print("-"*100)
+
     start = time.time()
-    print("Running rxploit_selector_vuln")
+    print("Running exploit selector vuln")
     exploit_selector_vuln("CVE-2022-0540", client)  # noqa
     total = time.time() - start
     print(f"Total execution time: {total}")
 
+    print("-"*100)
+
+    start = time.time()
+    print("Running exploit selector soft")
+    exploit_selector_soft("mysql port 3306 version 2.3", client)  # noqa
+    total = time.time() - start
+    print(f"Total execution time: {total}")
+    
 
 if __name__ == "__main__":
     app()
