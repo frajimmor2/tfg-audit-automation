@@ -92,7 +92,7 @@ def llm_time_execution_test():
     exploit_selector_soft("mysql port 3306 version 2.3", client)  # noqa
     total = time.time() - start
     print(f"Total execution time: {total}")
-    
+
 
 if __name__ == "__main__":
     app()
