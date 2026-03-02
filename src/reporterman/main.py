@@ -77,7 +77,7 @@ def llm_time_execution_test():
     print(f"Actual outputs: {out1}, {out2}")
     print(f"Total execution time: {total}")
 
-    print("-"*100)
+    print("-" * 100)
 
     start = time.time()
     print("Running exploit selector vuln")
@@ -85,7 +85,7 @@ def llm_time_execution_test():
     total = time.time() - start
     print(f"Total execution time: {total}")
 
-    print("-"*100)
+    print("-" * 100)
 
     start = time.time()
     print("Running exploit selector soft")
