@@ -5,6 +5,10 @@ from reporterman.database.models import (
     CREATE_SOFTWARE_TABLE,
     CREATE_VULNERABILITY_TABLE,
     CREATE_EXPLOIT_TABLE,
+    DROP_TARGET,
+    DROP_EXPLOIT,
+    DROP_VULNERABILITY,
+    DROP_SOFTWARE
 )
 
 DB_BASE_DIR = Path(__file__).resolve().parent
@@ -20,6 +24,10 @@ def get_connection() -> sqlite3.Connection:
 
 def init_db() -> None:
     with get_connection() as connect:
+        connect.execute(DROP_EXPLOIT)
+        connect.execute(DROP_VULNERABILITY)
+        connect.execute(DROP_SOFTWARE)
+        connect.execute(DROP_TARGET)
         connect.execute(CREATE_TARGET_TABLE)
         connect.execute(CREATE_SOFTWARE_TABLE)
         connect.execute(CREATE_VULNERABILITY_TABLE)

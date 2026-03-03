@@ -8,9 +8,14 @@ EACH TIME THIS IS CALLED, THE CLIENT WILL BE ALWAYS CREATED
 def soft_obs_handler(input: str, client) -> int:
 
     try:
-        return int(
-            client.generate(model="soft_obs_analyzer", prompt=input).response
-        )  # noqa
+        response = client.generate(model="soft_obs_analyzer", prompt=input).response  # noqa
+        if "0" or "not obsolete" in response:
+            return 0
+        elif "1" in response:
+            return 1
+        else:
+            raise ValueError(f"Unexpected response: {response}")  # noqa
+
     except Exception as e:
         typer.secho(
             f"There was a problem evaluating {input}",
@@ -52,9 +57,9 @@ def exploit_selector_vuln(cve: str, client) -> list:
         raise typer.Exit(1)
 
 
-def exploit_selector_soft(soft: str, client) -> list:
+def exploit_selector_soft(soft: list, other_info:str, client) -> list:
 
-    input = " ".join(soft)
+    input = " ".join(soft) + f" other info: {other_info}"
     try:
         response = client.generate(
             model="exploit_selector_soft", prompt=input

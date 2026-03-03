@@ -34,8 +34,12 @@ pip install -e .
 If you just wat to reinstall the models, just run this:
 
 ```bash
+ollama rm soft_obs_analyzer
+ollama rm exploit_selector_vuln
+ollama rm exploit_selector_soft
+ollama rm llm_list_parser
 ollama create soft_obs_analyzer -f llms/soft_obs_analyzer
-ollama create exploit_selector_soft -f llms/exploit_selector_vuln
+ollama create exploit_selector_vuln -f llms/exploit_selector_vuln
 ollama create exploit_selector_soft -f llms/exploit_selector_soft
 ollama create llm_list_parser -f llms/llm_list_parser
 ```

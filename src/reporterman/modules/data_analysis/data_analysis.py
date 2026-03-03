@@ -4,9 +4,15 @@ from reporterman.database.database import (
     insert_software,
     insert_vulnerability,
 )
+from reporterman.ollama_models.llm_handler import (
+    soft_obs_handler,
+    exploit_selector_vuln,
+    exploit_selector_soft,
+)
 from dotenv import load_dotenv
 import os
 import requests
+import ollama
 
 load_dotenv()
 
@@ -52,26 +58,33 @@ def data_analysis(input_info: dict) -> dict:
     output = dict()
     targets = list(input_info.keys())
     for target in targets:
-        # Store the info
+
         exploits = set()
         target_info = input_info[target][0]
-        insert_target(target, target_info)
-        # other_info = input_info[target][2]
+        insert_target(target, target_info)  # Store info
+        other_info = input_info[target][2]
         target_id = get_target_id(target)
+        client = ollama.Client()
 
         for cpe in input_info[target][1]:
-            obs = False  # LLM: Data_obs_analyzer(soft)
-            # Store the info
-            insert_software(target_id, cpe, obs)
-            # LLM: exploit_selector
-            # exploits.append([response, ""])
+            
+            obs = soft_obs_handler(cpe[0]+ f" {other_info}", client)
+            insert_software(target_id, cpe, obs)  # Store info
+            selected_exploits = exploit_selector_soft(cpe, other_info, client)  # noqa
+            for exploit in selected_exploits:
+                exploits.add((exploit, ""))
 
         for vuln in input_info[target][3]:
-            desc = "lorem_ipsum"  # LLM: cve_descriptor
-            # check vuln link - else https://nvd.nist.gov/vuln/detail/{CVE}
-            insert_vulnerability(target_id, vuln, desc)
-            # LLM: vuln input exploit selector
-            # exploits.append([response, vuln[0]])
+            aux_vuln = vuln
+            # Add nist link
+            aux_vuln[1] = (vuln[1] + f" https://nvd.nist.gov/vuln/detail/{vuln[0]}").strip()  # noqa
+            desc = get_cve_description(vuln[0])
+            insert_vulnerability(target_id, aux_vuln, desc)  # Store info
+            selected_exploits = exploit_selector_vuln(vuln[0], client)  # noqa
+            if selected_exploits:
+                for exploit in selected_exploits:
+                    exploits.add((exploit, vuln[0]))
+
         output[target] = exploits
 
     return output

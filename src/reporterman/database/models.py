@@ -57,3 +57,23 @@ CREATE TABLE IF NOT EXISTS exploit (
             ON DELETE CASCADE
 );
 """
+
+
+DROP_EXPLOIT = """
+DROP TABLE IF EXISTS exploit;
+"""
+
+
+DROP_SOFTWARE = """
+DROP TABLE IF EXISTS software;
+"""
+
+
+DROP_TARGET = """
+DROP TABLE IF EXISTS target;
+"""
+
+
+DROP_VULNERABILITY = """
+DROP TABLE IF EXISTS vulnerability;
+"""
