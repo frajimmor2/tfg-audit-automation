@@ -18,16 +18,6 @@ TASK:
    - No extra text before or after
    - Each item may contain spaces internally
 
-VALID EXAMPLE:
-exploit1,exploit2,exploit3
-
-INVALID EXAMPLES:
-apple, banana, watermelon
-This are fruits: apple, banana
-- apple
-- banana
-apple
-banana
 
 RULES (STRICT):
 - If input is already valid → output it EXACTLY as received.
@@ -42,8 +32,4 @@ RULES (STRICT):
 - NEVER add quotes.
 - NEVER output anything except the final list.
 - If no list items can be extracted → output an empty string.
-
-Your output MUST contain only:
-item1,item2,item3
-Nothing else.
 """

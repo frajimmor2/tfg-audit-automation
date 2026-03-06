@@ -9,6 +9,9 @@ from reporterman.ollama_models.llm_handler import (
     exploit_selector_vuln,
     exploit_selector_soft,
 )
+from reporterman.ollama_models.filters import (
+    filter_response
+)
 from dotenv import load_dotenv
 import os
 import requests
@@ -70,9 +73,13 @@ def data_analysis(input_info: dict) -> dict:
             
             obs = soft_obs_handler(cpe[0]+ f" {other_info}", client)
             insert_software(target_id, cpe, obs)  # Store info
-            selected_exploits = exploit_selector_soft(cpe, other_info, client)  # noqa
-            for exploit in selected_exploits:
-                exploits.add((exploit, ""))
+            for i in range(3):  # Ask 3 times due to the fail rate
+                selected_exploits = exploit_selector_soft(cpe, other_info, client)  # noqa
+                if selected_exploits:
+                    for exploit in selected_exploits:
+                        selected = filter_response(exploit).strip()
+                        if selected:
+                            exploits.add((selected, ""))
 
         for vuln in input_info[target][3]:
             aux_vuln = vuln
@@ -80,10 +87,13 @@ def data_analysis(input_info: dict) -> dict:
             aux_vuln[1] = (vuln[1] + f" https://nvd.nist.gov/vuln/detail/{vuln[0]}").strip()  # noqa
             desc = get_cve_description(vuln[0])
             insert_vulnerability(target_id, aux_vuln, desc)  # Store info
-            selected_exploits = exploit_selector_vuln(vuln[0], client)  # noqa
-            if selected_exploits:
-                for exploit in selected_exploits:
-                    exploits.add((exploit, vuln[0]))
+            for i in range(3):  # Ask 3 times due to the fail rate
+                selected_exploits = exploit_selector_vuln(vuln[0], client)  # noqa
+                if selected_exploits:
+                    for exploit in selected_exploits:
+                        selected = filter_response(exploit).strip()
+                        if selected:
+                            exploits.add((selected, vuln[0]))
 
         output[target] = exploits
 
