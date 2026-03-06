@@ -1,4 +1,4 @@
-def filter_response(input: str)-> str:
+def filter_response(input: str) -> str:
 
     output = input.strip()
     # YES, THE FILTER IS JUST A BUNCH OF HARDCODED INVALIDS RESPONSES
@@ -59,7 +59,7 @@ def filter_response(input: str)-> str:
         output = output.replace("item3", "")
         output = output.replace("item4", "")
         output = output.replace("item5", "")
-        output = output.replace("item6", "") 
+        output = output.replace("item6", "")
         output = output.replace("switch", "")
         output = output.replace("router", "")
         output = output.replace("firewall", "")
