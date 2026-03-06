@@ -8,7 +8,7 @@ from reporterman.database.models import (
     DROP_TARGET,
     DROP_EXPLOIT,
     DROP_VULNERABILITY,
-    DROP_SOFTWARE
+    DROP_SOFTWARE,
 )
 
 DB_BASE_DIR = Path(__file__).resolve().parent

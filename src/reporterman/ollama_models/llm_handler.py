@@ -8,7 +8,9 @@ EACH TIME THIS IS CALLED, THE CLIENT WILL BE ALWAYS CREATED
 def soft_obs_handler(input: str, client) -> int:
 
     try:
-        response = client.generate(model="soft_obs_analyzer", prompt=input).response  # noqa
+        response = client.generate(
+            model="soft_obs_analyzer", prompt=input
+        ).response  # noqa
         if "0" or "not obsolete" in response:
             return 0
         elif "1" in response:
