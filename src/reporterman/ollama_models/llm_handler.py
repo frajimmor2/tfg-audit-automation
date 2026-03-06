@@ -57,7 +57,7 @@ def exploit_selector_vuln(cve: str, client) -> list:
         raise typer.Exit(1)
 
 
-def exploit_selector_soft(soft: list, other_info:str, client) -> list:
+def exploit_selector_soft(soft: list, other_info: str, client) -> list:
 
     input = " ".join(soft) + f" other info: {other_info}"
     try:

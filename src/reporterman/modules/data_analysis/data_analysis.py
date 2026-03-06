@@ -70,8 +70,8 @@ def data_analysis(input_info: dict) -> dict:
         client = ollama.Client()
 
         for cpe in input_info[target][1]:
-            
-            obs = soft_obs_handler(cpe[0]+ f" {other_info}", client)
+
+            obs = soft_obs_handler(cpe[0] + f" {other_info}", client)
             insert_software(target_id, cpe, obs)  # Store info
             for i in range(3):  # Ask 3 times due to the fail rate
                 selected_exploits = exploit_selector_soft(cpe, other_info, client)  # noqa
