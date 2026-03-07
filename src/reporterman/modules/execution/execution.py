@@ -1,6 +1,9 @@
+import typer
+
 """
 INPUT: dict[target]:[("exploit","CVE")]
 """
+
 
 def execution(input: dict) -> None:
     targets = list(input.keys())
@@ -16,6 +19,8 @@ def execution(input: dict) -> None:
                 #       if selected[1]:
                 #           metasploit_queue.add(selected)
                 # TODO: Manage not having CVE
+                print("linter fix")
+
             except Exception as e:
                 msg = f"There was a problem executing f{selected[0]}"
                 typer.secho(msg, fg=typer.colors.RED, err=True)
@@ -27,6 +32,8 @@ def execution(input: dict) -> None:
                 #       if selectec[1]:
                 #           searchsploit_queue.add(selected)
                 # TODO: Manage not having CVE
+                print("linter fix")
+
             except Exception as e:
                 msg = f"There was a problem executing f{selected[0]}"
                 typer.secho(msg, fg=typer.colors.RED, err=True)
@@ -34,5 +41,7 @@ def execution(input: dict) -> None:
 
         for exec in metasploit_queue:
             # insert_execution(exec, target)
+            pass
         for exec in searchsploit_queue:
             # insert_execution(exec, target)
+            pass

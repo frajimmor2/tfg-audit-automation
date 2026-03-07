@@ -8,34 +8,35 @@ def filter_response(input: str) -> str:
         return ""
     else:
         output = output.replace(
-            "and brain tissue By mimicking or blocking the action of natural hormones like estrogen",
+            "and brain tissue By mimicking or blocking the action of natural hormones like estrogen",  # noqa
             "",
         )  # noqa
         output = output.replace(
-            "\n\nRULES (STRICT):\n- If input is already valid → output it EXACTLY as received",
+            "\n\nRULES (STRICT):\n- If input is already valid → output it EXACTLY as received",  # noqa
             "",
         )  # noqa
         output = output.replace(
-            "quotes around any item names to maintain raw data integrity for further processing by downstream systems within this pipeline",
+            "quotes around any item names to maintain raw data integrity for further processing by downstream systems within this pipeline",  # noqa
             "",
         )  # noqa
         output = output.replace(
-            "while removing explanations if present beforehand and ensuring no duplicates remain in your finalized list",
+            "while removing explanations if present beforehand and ensuring no duplicates remain in your finalized list",  # noqa
             "",
         )  # noqa
         output = output.replace(
-            "output it exactly as received without any alterations or additional commentary",
+            "output it exactly as received without any alterations or additional commentary",  # noqa
             "",
         )  # noqa
         output = output.replace(
-            "The CVE number was corrected to a plausible format and the duplicate item",
+            "The CVE number was corrected to a plausible format and the duplicate item",  # noqa
             "",
         )  # noqa
         output = output.replace(
-            "Check if the input is already a valid list", ""
+            "Check if the input is already a valid list", ""  # noqa
         )  # noqa
         output = output.replace(
-            "which should not be part of the parsed content for our task here", ""
+            "which should not be part of the parsed content for our task here",
+            "",  # noqa
         )  # noqa
         output = output.replace("removed duplicates", "")
         output = output.replace("Removed duplicates", "")
@@ -45,7 +46,7 @@ def filter_response(input: str) -> str:
         output = output.replace("\\t", "")
         output = output.replace("\n-", "")
         output = output.replace(
-            "If no valid list elements can be extracted from a given input", ""
+            "If no valid list elements can be extracted from a given input", ""  # noqa
         )  # noqa
         output = output.replace("`", "")
         output = output.replace("then you must return an empty string", "")  # noqa
@@ -55,12 +56,12 @@ def filter_response(input: str) -> str:
         output = output.replace("exploit:", "")
         output = output.replace("If input does not", "")
         output = output.replace(
-            "thus preventing pipeline failure due to invalid input", ""
+            "thus preventing pipeline failure due to invalid input", ""  # noqa
         )  # noqa
         output = output.replace("output an empty string to indicate", "")  # noqa
         output = output.replace("msexploit", "")
         output = output.replace(
-            "This is an exploit that allows unauthorized access.", ""
+            "This is an exploit that allows unauthorized access.", ""  # noqa
         )  # noqa
         output = output.replace(".", "")
         output = output.replace("|", "")
