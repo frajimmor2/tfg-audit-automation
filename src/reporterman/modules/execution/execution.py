@@ -11,7 +11,8 @@ def execution(input: dict) -> None:
 
         metasploit_queue = set()
         searchsploit_queue = set()
-
+        
+        # TODO: thread execution this for
         for selected in input[target]:
             try:
                 # execution = execute_exploit_m(selected[0])
