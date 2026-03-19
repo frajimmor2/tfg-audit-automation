@@ -5,6 +5,7 @@ from reporterman.modules.execution.script_executor import (
 from reporterman.database.database import (
     insert_exploit,
     get_vulnerability_id,
+    insert_attemp,
 )
 
 """
@@ -20,9 +21,8 @@ def execution(input: dict) -> None:
     for target in targets:
 
         queue = dict()
-        """
-        queue: dict[exploit]:[attemp] -> attemp = (payload:str, success:bool)
-        """
+        # queue: dict[exploit]:[attemp] ->
+        # attemp = (payload:str, success:bool, cve: str)
 
         for selected in input[target]:
             queue, model_drift = manage_execution(
@@ -38,9 +38,10 @@ def execution(input: dict) -> None:
         # Insert results info in db
         exploits = list(queue.keys)
         for exploit in exploits:
-            vuln_id = get_vulnerability_id(target, cve)
-            insert_exploit(vuln_id, exploit)  # Store info
             attemps = queue[exploit]
+            vuln_id = get_vulnerability_id(target, attemps[0][2])
+            insert_exploit(vuln_id, exploit)  # Store info
+
             for attemp in attemps:
                 insert_attemp(target, exploit, attemp)  # Store info
 
