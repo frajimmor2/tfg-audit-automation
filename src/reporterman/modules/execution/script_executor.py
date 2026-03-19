@@ -2,14 +2,15 @@ from pathlib import Path
 import subprocess
 import typer
 
-
 BASE_DIR = Path(__file__).resolve().parent
 exec_m_path = BASE_DIR / "exec_m.sh"
 exec_m_0_path = BASE_DIR / "exec_m_0.sh"
 exec_m_1_path = BASE_DIR / "exec_m_1.sh"
 
 
-def execute_exploit(script_path: str, exploit: str ,target: str, lhost: str) -> str:  # noqa
+def execute_exploit(
+    script_path: str, exploit: str, target: str, lhost: str
+) -> str:  # noqa
     cmd = [f"./{script_path}", exploit, target, lhost]
     # This function will be wrapped by a try statement
     output = subprocess.Popen(
@@ -46,7 +47,9 @@ def check_execution(execution: str) -> str:
         return False
 
 
-def manage_execution(selected: list, model_drift: int, queue: list, payload: str, target: str, lhost: str) -> list:  # noqa
+def manage_execution(
+    selected: list, model_drift: int, queue: list, payload: str, target: str, lhost: str
+) -> list:  # noqa
 
     out_queue = queue
     out_model_d = model_drift

@@ -1,6 +1,6 @@
 from reporterman.modules.execution.script_executor import (
-        manage_execution,
-        )
+    manage_execution,
+)
 
 """
 INPUT: dict[target]:[("exploit","CVE")]
@@ -20,9 +20,15 @@ def execution(input: dict) -> None:
         """
 
         for selected in input[target]:
-            queue, model_drift = manage_execution(selected, model_drift, queue, "n", target, lhost)  # noqa
-            queue, model_drift = manage_execution(selected, model_drift, queue, "0", target, lhost)  # noqa
-            queue, model_drift = manage_execution(selected, model_drift, queue, "1", target, lhost)  # noqa
+            queue, model_drift = manage_execution(
+                selected, model_drift, queue, "n", target, lhost
+            )  # noqa
+            queue, model_drift = manage_execution(
+                selected, model_drift, queue, "0", target, lhost
+            )  # noqa
+            queue, model_drift = manage_execution(
+                selected, model_drift, queue, "1", target, lhost
+            )  # noqa
 
         # Insert results info in db
         exploits = list(queue.keys)
