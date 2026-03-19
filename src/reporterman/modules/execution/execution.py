@@ -1,4 +1,11 @@
 import typer
+from reporterman.modules.execution.script_executor import (
+        execute_np,
+        exrcute_p0,
+        execute_p1,
+        check_execuiton,
+        manage_execution,
+        )
 
 """
 INPUT: dict[target]:[("exploit","CVE")]
@@ -7,41 +14,28 @@ INPUT: dict[target]:[("exploit","CVE")]
 
 def execution(input: dict) -> None:
     targets = list(input.keys())
+    lhost = "TODO: GET MY IP"
+    model_drift = 0
+
     for target in targets:
 
-        metasploit_queue = set()
-        searchsploit_queue = set()
+        queue = dict()
+        """
+        queue: dict[exploit]: [attemp] -> attemp = (payload: str, success: bool)
+        """
 
         for selected in input[target]:
-            try:
-                # execution = execute_exploit_m(selected[0])
-                # if check_execution(execution):
-                #       if selected[1]:
-                #           metasploit_queue.add(selected)
-                # TODO: Manage not having CVE
+           queue, model_drift = manage_execution(selected, model_drift, queue, "n", target, lhost)
+           queue, model_drift = manage_execution(selected, model_drift, queue, "0", target, lhost)
+           queue, model_drift = manage_execution(selected, model_drift, queue, "1", target, lhost)
+
+        # Insert results info in db
+        exploits = list(queue.keys)
+        for exploit in exploits:
+            # insert_exploit(target, exploit)
+            attemps = queue[exploit]
+            for attemp in attemps:
+                # insert_attemp(exploit, attemp)
                 print("linter fix")
 
-            except Exception as e:
-                msg = f"There was a problem executing f{selected[0]}"
-                typer.secho(msg, fg=typer.colors.RED, err=True)
-                typer.secho(f"Error: {e}", fg=typer.colors.RED, err=True)
-
-            try:
-                # execution = execute_exploit_s(selected[0])
-                # if check_execution(execution):
-                #       if selectec[1]:
-                #           searchsploit_queue.add(selected)
-                # TODO: Manage not having CVE
-                print("linter fix")
-
-            except Exception as e:
-                msg = f"There was a problem executing f{selected[0]}"
-                typer.secho(msg, fg=typer.colors.RED, err=True)
-                typer.secho(f"Error: {e}", fg=typer.colors.RED, err=True)
-
-        for exec in metasploit_queue:
-            # insert_execution(exec, target)
-            pass
-        for exec in searchsploit_queue:
-            # insert_execution(exec, target)
-            pass
+    # insert_model_drift(model_drift)

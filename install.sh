@@ -17,6 +17,8 @@ ollama create exploit_selector_soft -f llms/exploit_selector_soft
 ollama create llm_list_parser -f llms/llm_list_parser
 
 # Installation
+chmod +x src/reporterman/modules/execution/exec_m.sh
+chmod +x src/reporterman/modules/execution/exec_m_0.sh
+chmod +x src/reporterman/modules/execution/exec_m_1.sh
 pip install -r requirements.txt
 pip install -e .
-
