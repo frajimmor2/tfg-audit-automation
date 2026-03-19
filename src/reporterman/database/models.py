@@ -69,6 +69,15 @@ CREATE TABLE IF NOT EXISTS attemp (
 );
 """
 
+CREATE_STATS_TABLE = """
+CREATE TABLE IF NOT EXISTS stats (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        model_drift INTEGER NOT NULL,
+        total_attemps INTEGER NOT NULL,
+        fail_rate REAL NOT NULL
+);
+"""
+
 
 DROP_EXPLOIT = """
 DROP TABLE IF EXISTS exploit;
@@ -91,4 +100,8 @@ DROP TABLE IF EXISTS vulnerability;
 
 DROP_ATTEMP = """
 DROP TABLE IF EXISTS attemp;
+"""
+
+DROP_STATS = """
+DROP TABLE IF EXISTS stats;
 """

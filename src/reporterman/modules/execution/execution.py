@@ -6,6 +6,7 @@ from reporterman.database.database import (
     insert_exploit,
     get_vulnerability_id,
     insert_attemp,
+    insert_llm_stats,
 )
 
 """
@@ -16,6 +17,7 @@ INPUT: dict[target]:[("exploit","CVE")]
 def execution(input: dict) -> None:
     targets = list(input.keys())
     lhost = get_local_ip()
+    exploit_suggested = 0
     model_drift = 0
 
     for target in targets:
@@ -34,6 +36,7 @@ def execution(input: dict) -> None:
             queue, model_drift = manage_execution(
                 selected, model_drift, queue, "1", target, lhost
             )  # noqa
+            exploit_suggested += 3
 
         # Insert results info in db
         exploits = list(queue.keys)
@@ -45,4 +48,5 @@ def execution(input: dict) -> None:
             for attemp in attemps:
                 insert_attemp(target, exploit, attemp)  # Store info
 
-    # insert_model_drift(model_drift)
+    fail_rate = (model_drift/exploit_suggested)*100
+    insert_llm_stats(model_drift, exploit_suggested, fail_rate)

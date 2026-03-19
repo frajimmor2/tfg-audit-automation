@@ -16,6 +16,8 @@ from reporterman.database.database import (
     insert_attemp,
     get_exploit_id,
     get_attemp,
+    insert_llm_stats,
+    get_llm_stats,
 )
 
 
@@ -161,3 +163,17 @@ def test_insert_and_get_attemp(temp_db):
 
     assert row["payload"] == "payload"
     assert row["success"] is not None
+
+
+def test_insert_and_get_stats(temp_db):
+    insert_llm_stats(1,2,50.0)
+
+    result = get_llm_stats()
+    assert result is not None
+    assert len(result) == 1
+
+    row = result[0]
+
+    assert row["model_drift"] == 1
+    assert row["total_attemps"] == 2
+    assert row["fail_rate"] == 50.0

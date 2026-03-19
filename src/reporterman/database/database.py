@@ -6,11 +6,13 @@ from reporterman.database.models import (
     CREATE_VULNERABILITY_TABLE,
     CREATE_EXPLOIT_TABLE,
     CREATE_ATTEMP_TABLE,
+    CREATE_STATS_TABLE,
     DROP_TARGET,
     DROP_EXPLOIT,
     DROP_ATTEMP,
     DROP_VULNERABILITY,
     DROP_SOFTWARE,
+    DROP_STATS,
 )
 
 DB_BASE_DIR = Path(__file__).resolve().parent
@@ -31,6 +33,8 @@ def init_db() -> None:
         connect.execute(DROP_SOFTWARE)
         connect.execute(DROP_TARGET)
         connect.execute(DROP_ATTEMP)
+        connect.execute(DROP_STATS)
+        connect.execute(CREATE_STATS_TABLE)
         connect.execute(CREATE_TARGET_TABLE)
         connect.execute(CREATE_SOFTWARE_TABLE)
         connect.execute(CREATE_VULNERABILITY_TABLE)
@@ -246,4 +250,28 @@ def get_attemp(exploit_id, payload) -> dict:
     """
     attemp = get_value(get_cmd)
     return attemp
+
+
+def insert_llm_stats(drift: int, total_attemps: int, fail_rate: float) -> None:
+    insert_cmd = f"""
+    INSERT INTO stats (
+            model_drift,
+            total_attemps,
+            fail_rate) VALUES (
+                    {drift},
+                    {total_attemps},
+                    {fail_rate});
+    """
+    insert_value(insert_cmd)
+
+
+# There is only 1 item always
+def get_llm_stats() -> dict:
+    get_cmd = """
+    SELECT *
+    FROM stats s
+    WHERE s.id = 1;
+    """
+    stats = get_value(get_cmd)
+    return stats
 # fmt: on
