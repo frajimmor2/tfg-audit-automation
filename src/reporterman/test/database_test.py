@@ -13,7 +13,9 @@ from reporterman.database.database import (
     get_vulnerability_id,
     insert_exploit,
     get_exploit,
-    update_exploit,
+    insert_attemp,
+    get_exploit_id,
+    get_attemp,
 )
 
 
@@ -119,13 +121,13 @@ def test_get_vuln_id(temp_db):
     assert result == 1
 
 
-def test_insert_update_and_get_exploit(temp_db):
+def test_insert_and_get_exploit(temp_db):
     vuln = ["cve", "https://link"]
     insert_vulnerability(1, vuln, "lorem ipsum")
-    exploit = ["exploit1", "metasploit", "payload"]
+    exploit = "exploit1"
     # Test
     insert_exploit(1, exploit)
-    result = get_exploit(1, exploit[0])
+    result = get_exploit(1, exploit)
 
     assert result is not None
     assert len(result) == 1
@@ -133,21 +135,28 @@ def test_insert_update_and_get_exploit(temp_db):
     row = result[0]
 
     # sqlite3.Row is managed as a dict
-    assert row["name"] == exploit[0]
-    assert row["source"] == exploit[1]
-    assert row["payload"] == exploit[2]
-    assert row["success"] == 0
+    assert row["name"] == exploit
 
-    update_exploit(1, exploit[0])
-    result = get_exploit(1, exploit[0])
+def test_insert_and_get_attemp(temp_db):
+    target = "192.168.1.101"
+    target_info = ["linuxxx", "linux_kernel", "2.6", "lorem ipsum"]
+    insert_target(target, target_info)
+    target_id = get_target_id(target)
+    vuln = ["cvee", "https://link"]
+    insert_vulnerability(target_id, vuln, "lorem ipsum")
+    vuln_id = get_vulnerability_id(target_id, vuln[0])
+    exploit = "exploit10"
+    insert_exploit(vuln_id, exploit)
+    # Test
+    attemp = ["payload", 1, "cvee"]
+    insert_attemp(target, exploit, attemp)
+    exploit_id = get_exploit_id(exploit, "cvee", target)
+    result = get_attemp(exploit_id, "payload")
 
     assert result is not None
     assert len(result) == 1
-
+    
     row = result[0]
 
-    # sqlite3.Row is managed as a dict
-    assert row["name"] == exploit[0]
-    assert row["source"] == exploit[1]
-    assert row["payload"] == exploit[2]
-    assert row["success"] == 1
+    assert row["payload"] == "payload"
+    assert row["success"] == True

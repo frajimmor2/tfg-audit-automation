@@ -33,7 +33,7 @@ def execution(input: dict) -> None:
         # Insert results info in db
         exploits = list(queue.keys)
         for exploit in exploits:
-            # insert_exploit(target, exploit)
+            # insert_exploit(target, cve, exploit)
             attemps = queue[exploit]
             for attemp in attemps:
                 # insert_attemp(exploit, attemp)

@@ -48,9 +48,10 @@ def check_execution(execution: str) -> str:
         return False
 
 
-def manage_queue(queue: dict, execution: list) -> dict:
+def manage_queue(queue: dict, execution: list, cve: str) -> dict:
     key = execution[1]
-    value = [execution[3], execution[2]]
+    value = [execution[3], execution[2], cve]
+    # payload, success, cve
 
     if key in queue:
         queue[key].append(value)
@@ -82,7 +83,7 @@ def manage_execution(
         if check_execution(execution):
             # execution = "exploit_exists, exploit_name, success, payload"
             if selected[1]:
-                queue = manage_queue(queue, execution)
+                queue = manage_queue(queue, execution, selected[1])
             else:
                 pass
         # TODO: Manage not having CVE

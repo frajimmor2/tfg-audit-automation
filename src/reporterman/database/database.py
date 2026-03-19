@@ -5,8 +5,10 @@ from reporterman.database.models import (
     CREATE_SOFTWARE_TABLE,
     CREATE_VULNERABILITY_TABLE,
     CREATE_EXPLOIT_TABLE,
+    CREATE_ATTEMP_TABLE,
     DROP_TARGET,
     DROP_EXPLOIT,
+    DROP_ATTEMP,
     DROP_VULNERABILITY,
     DROP_SOFTWARE,
 )
@@ -28,10 +30,12 @@ def init_db() -> None:
         connect.execute(DROP_VULNERABILITY)
         connect.execute(DROP_SOFTWARE)
         connect.execute(DROP_TARGET)
+        connect.execute(DROP_ATTEMP)
         connect.execute(CREATE_TARGET_TABLE)
         connect.execute(CREATE_SOFTWARE_TABLE)
         connect.execute(CREATE_VULNERABILITY_TABLE)
         connect.execute(CREATE_EXPLOIT_TABLE)
+        connect.execute(CREATE_ATTEMP_TABLE)
 
 
 def insert_value(insert_cmd: str) -> None:
@@ -176,18 +180,12 @@ def get_vulnerability_id(target: int, cve: str) -> int:
     return id
 
 
-def insert_exploit(vuln: int, exploit: list) -> None:
+def insert_exploit(vuln: int, exploit: str) -> None:
     insert_cmd = f"""
     INSERT INTO exploit (
-        name,
-        source,
-        payload,
-        success,
+        name, 
         vuln_id) VALUES (
-                '{exploit[0]}',
-                '{exploit[1]}',
-                '{exploit[2]}',
-                FALSE,
+                '{exploit}', 
                 {vuln});
     """
     insert_value(insert_cmd)
@@ -206,14 +204,46 @@ def get_exploit(vuln: int, name: str) -> dict:
     return exploit
 
 
-def update_exploit(vuln: int, name: str) -> None:
-    update_cmd = f"""
-    UPDATE exploit
-    SET success = TRUE
+def get_exploit_id(name: str, cve: str, target: str) -> int:
+    target_id = get_target_id(target)
+    vuln_id = get_vulnerability_id(target_id, cve)
+    get_cmd = f"""
+    SELECT e.id
+    FROM exploit e
     WHERE
-    vuln_id = {vuln}
+    e.vuln_id = {vuln_id}
     AND
-    name = '{name}';
+    e.name = '{name}';
+    """ 
+    id = get_value(get_cmd)
+    id = id[0]["id"]
+    return id
+
+
+def insert_attemp(target: str, name: str, exec: list) -> None:
+    exploit_id = get_exploit_id(name, exec[2], target)
+    insert_cmd = f"""
+    INSERT INTO attemp (
+            payload,
+            success,
+            exploit_id) VALUES (
+                    '{exec[0]}',
+                    {exec[1]},
+                    {exploit_id});
     """
-    insert_value(update_cmd)
+    insert_value(insert_cmd)
+
+
+# For test purposes
+def get_attemp(exploit_id, payload) -> dict:
+    get_cmd = f"""
+    SELECT *
+    FROM attemp a
+    WHERE
+    a.exploit_id = {exploit_id}
+    AND
+    a.payload = '{payload}';
+    """
+    attemp = get_value(get_cmd)
+    return attemp
 # fmt: on

@@ -48,12 +48,23 @@ CREATE TABLE IF NOT EXISTS exploit (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         vuln_id INTEGER NOT NULL,
         name TEXT NOT NULL,
-        source TEXT NOT NULL,
-        payload TEXT,
-        success BOOL NOT NULL,
 
         FOREIGN KEY(vuln_id)
             REFERENCES vulnerability (id)
+            ON DELETE CASCADE
+);
+"""
+
+
+CREATE_ATTEMP_TABLE = """
+CREATE TABLE IF NOT EXISTS attemp (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        exploit_id INTEGER NOT NULL,
+        payload TEXT,
+        success BOOL NOT NULL,
+
+        FOREIGN KEY(exploit_id)
+            REFERENCES exploit (id)
             ON DELETE CASCADE
 );
 """
@@ -76,4 +87,8 @@ DROP TABLE IF EXISTS target;
 
 DROP_VULNERABILITY = """
 DROP TABLE IF EXISTS vulnerability;
+"""
+
+DROP_ATTEMP = """
+DROP TABLE IF EXISTS attemp;
 """
