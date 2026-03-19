@@ -166,7 +166,7 @@ def test_insert_and_get_attemp(temp_db):
 
 
 def test_insert_and_get_stats(temp_db):
-    insert_llm_stats(1,2,50.0)
+    insert_llm_stats(1, 2, 50.0)
 
     result = get_llm_stats()
     assert result is not None
