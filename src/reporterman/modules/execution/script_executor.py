@@ -38,6 +38,7 @@ def execute_p1(exploit: str, target: str, lhost: str) -> str:
     output = execute_exploit(exec_m_1_path, exploit, target, lhost)
     return output
 
+
 # TODO: test this function
 def check_execution(execution: str) -> str:
     try:
@@ -60,7 +61,7 @@ def manage_queue(queue: dict, execution: list) -> dict:
 
 
 def manage_execution(
-    selected: list, model_drift: int, queue: dict, payload: str, target: str, lhost: str
+    selected: list, model_drift: int, queue: dict, payload: str, target: str, lhost: str  # noqa
 ) -> list:  # noqa
 
     out_queue = queue
