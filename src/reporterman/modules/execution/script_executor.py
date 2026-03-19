@@ -38,7 +38,7 @@ def execute_p1(exploit: str, target: str, lhost: str) -> str:
     output = execute_exploit(exec_m_1_path, exploit, target, lhost)
     return output
 
-
+# TODO: test this function
 def check_execution(execution: str) -> str:
     try:
         exec = execution.split(",")
@@ -47,8 +47,20 @@ def check_execution(execution: str) -> str:
         return False
 
 
+def manage_queue(queue: dict, execution: list) -> dict:
+    key = execution[1]
+    value = [execution[3], execution[2]]
+
+    if key in queue:
+        queue[key].append(value)
+    else:
+        queue[key] = [value]
+
+    return queue
+
+
 def manage_execution(
-    selected: list, model_drift: int, queue: list, payload: str, target: str, lhost: str
+    selected: list, model_drift: int, queue: dict, payload: str, target: str, lhost: str
 ) -> list:  # noqa
 
     out_queue = queue
@@ -62,8 +74,9 @@ def manage_execution(
             case "1":
                 execution = execute_p1(selected[0], target, lhost)
         if check_execution(execution):
+            # execution = "exploit_exists, exploit_name, success, payload"
             if selected[1]:
-                queue.add(selected)
+                queue = manage_queue(queue, execution)
             else:
                 pass
         # TODO: Manage not having CVE
