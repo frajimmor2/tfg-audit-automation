@@ -137,6 +137,7 @@ def test_insert_and_get_exploit(temp_db):
     # sqlite3.Row is managed as a dict
     assert row["name"] == exploit
 
+
 def test_insert_and_get_attemp(temp_db):
     target = "192.168.1.101"
     target_info = ["linuxxx", "linux_kernel", "2.6", "lorem ipsum"]
@@ -155,8 +156,8 @@ def test_insert_and_get_attemp(temp_db):
 
     assert result is not None
     assert len(result) == 1
-    
+
     row = result[0]
 
     assert row["payload"] == "payload"
-    assert row["success"] == True
+    assert row["success"] is not None

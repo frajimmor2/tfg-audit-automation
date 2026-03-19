@@ -183,9 +183,9 @@ def get_vulnerability_id(target: int, cve: str) -> int:
 def insert_exploit(vuln: int, exploit: str) -> None:
     insert_cmd = f"""
     INSERT INTO exploit (
-        name, 
+        name,
         vuln_id) VALUES (
-                '{exploit}', 
+                '{exploit}',
                 {vuln});
     """
     insert_value(insert_cmd)
@@ -214,7 +214,7 @@ def get_exploit_id(name: str, cve: str, target: str) -> int:
     e.vuln_id = {vuln_id}
     AND
     e.name = '{name}';
-    """ 
+    """
     id = get_value(get_cmd)
     id = id[0]["id"]
     return id
