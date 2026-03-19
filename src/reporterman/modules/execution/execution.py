@@ -1,9 +1,4 @@
-import typer
 from reporterman.modules.execution.script_executor import (
-        execute_np,
-        exrcute_p0,
-        execute_p1,
-        check_execuiton,
         manage_execution,
         )
 
@@ -21,13 +16,13 @@ def execution(input: dict) -> None:
 
         queue = dict()
         """
-        queue: dict[exploit]: [attemp] -> attemp = (payload: str, success: bool)
+        queue: dict[exploit]:[attemp] -> attemp = (payload:str, success:bool)
         """
 
         for selected in input[target]:
-           queue, model_drift = manage_execution(selected, model_drift, queue, "n", target, lhost)
-           queue, model_drift = manage_execution(selected, model_drift, queue, "0", target, lhost)
-           queue, model_drift = manage_execution(selected, model_drift, queue, "1", target, lhost)
+            queue, model_drift = manage_execution(selected, model_drift, queue, "n", target, lhost)  # noqa
+            queue, model_drift = manage_execution(selected, model_drift, queue, "0", target, lhost)  # noqa
+            queue, model_drift = manage_execution(selected, model_drift, queue, "1", target, lhost)  # noqa
 
         # Insert results info in db
         exploits = list(queue.keys)

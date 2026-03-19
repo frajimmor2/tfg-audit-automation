@@ -11,7 +11,7 @@ exec_m_1_path = BASE_DIR / "exec_m_1.sh"
 
 def execute_exploit(script_path: str, exploit: str ,target: str, lhost: str) -> str:  # noqa
     cmd = [f"./{script_path}", exploit, target, lhost]
-    # This function will be wrapped by a try statement 
+    # This function will be wrapped by a try statement
     output = subprocess.Popen(
         cmd,
         stdout=subprocess.PIPE,
@@ -40,13 +40,13 @@ def execute_p1(exploit: str, target: str, lhost: str) -> str:
 
 def check_execution(execution: str) -> str:
     try:
-        exec = executiom.split(",")
+        exec = execution.split(",")
         return exec[0] == "1"
-    except exception as e:
+    except Exception:
         return False
 
 
-def manage_execution(selected: list, model_drift: int, queue: list, payload: str, target: str, lhost: str) -> list:
+def manage_execution(selected: list, model_drift: int, queue: list, payload: str, target: str, lhost: str) -> list:  # noqa
 
     out_queue = queue
     out_model_d = model_drift
@@ -66,7 +66,7 @@ def manage_execution(selected: list, model_drift: int, queue: list, payload: str
         # TODO: Manage not having CVE
         else:
             out_model_d += 1
-                
+
     except Exception as e:
         msg = f"There was a problem executing f{selected[0]}"
         typer.secho(msg, fg=typer.colors.RED, err=True)
