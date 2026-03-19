@@ -1,6 +1,7 @@
 from pathlib import Path
 import subprocess
 import typer
+import socket
 
 BASE_DIR = Path(__file__).resolve().parent
 exec_m_path = BASE_DIR / "exec_m.sh"
@@ -96,3 +97,17 @@ def manage_execution(
         typer.secho(f"Error: {e}", fg=typer.colors.RED, err=True)
 
     return [out_queue, out_model_d]
+
+
+def get_local_ip():
+
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+        s.close()
+
+        return ip
+
+    except Exception:
+        return "127.0.0.1"

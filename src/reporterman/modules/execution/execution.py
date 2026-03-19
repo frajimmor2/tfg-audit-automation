@@ -1,5 +1,10 @@
 from reporterman.modules.execution.script_executor import (
     manage_execution,
+    get_local_ip,
+)
+from reporterman.database.database import (
+    insert_exploit,
+    get_vulnerability_id,
 )
 
 """
@@ -9,7 +14,7 @@ INPUT: dict[target]:[("exploit","CVE")]
 
 def execution(input: dict) -> None:
     targets = list(input.keys())
-    lhost = "TODO: GET MY IP"
+    lhost = get_local_ip()
     model_drift = 0
 
     for target in targets:
@@ -33,10 +38,10 @@ def execution(input: dict) -> None:
         # Insert results info in db
         exploits = list(queue.keys)
         for exploit in exploits:
-            # insert_exploit(target, cve, exploit)
+            vuln_id = get_vulnerability_id(target, cve)
+            insert_exploit(vuln_id, exploit)  # Store info
             attemps = queue[exploit]
             for attemp in attemps:
-                # insert_attemp(exploit, attemp)
-                print("linter fix")
+                insert_attemp(target, exploit, attemp)  # Store info
 
     # insert_model_drift(model_drift)
