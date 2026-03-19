@@ -61,7 +61,12 @@ def manage_queue(queue: dict, execution: list) -> dict:
 
 
 def manage_execution(
-    selected: list, model_drift: int, queue: dict, payload: str, target: str, lhost: str  # noqa
+    selected: list,
+    model_drift: int,
+    queue: dict,
+    payload: str,
+    target: str,
+    lhost: str,  # noqa
 ) -> list:  # noqa
 
     out_queue = queue
