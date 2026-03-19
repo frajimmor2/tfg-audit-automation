@@ -48,5 +48,5 @@ def execution(input: dict) -> None:
             for attemp in attemps:
                 insert_attemp(target, exploit, attemp)  # Store info
 
-    fail_rate = (model_drift/exploit_suggested)*100
+    fail_rate = (model_drift / exploit_suggested) * 100
     insert_llm_stats(model_drift, exploit_suggested, fail_rate)
