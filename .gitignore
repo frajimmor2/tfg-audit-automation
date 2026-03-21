@@ -10,3 +10,6 @@ venv/
 
 *.egg-info/
 src/reporterman.egg-info/
+
+# Database (i forgot lmao)
+src/reporterman/database/reporterman.db

@@ -30,7 +30,7 @@ EOF
     )
     fi
 
-    if (grep -q "session .* opened" <<< "$out" || (! grep -q "exploit failed" <<< "$out" && ! grep -q "Exploit failed" <<< "$out" && ! grep -q "Exploit completed, but no session was created" <<< "$out" && ! grep -q "No target vulnerable" <<< "$out" && ! grep -q "target may not be vulnerable" <<< "$out" && ! grep -q "Exploit completed, but no session was created." <<< "$out")); then
+    if (grep -q "session .* opened" <<< "$out" || (! grep -q "exploit failed" <<< "$out" && ! grep -q "Exploit failed" <<< "$out" && ! grep -q "Exploit completed, but no session was created" <<< "$out" && ! grep -q "No target vulnerable" <<< "$out" && ! grep -q "target may not be vulnerable" <<< "$out" && ! grep -q "Exploit completed, but no session was created." <<< "$out" && ! grep -q "Msf::OptionValidateError" <<< "$out")); then
     	echo "1,$exploit,1,$payload"
 
     else
