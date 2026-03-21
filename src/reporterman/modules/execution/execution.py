@@ -41,7 +41,7 @@ def execution(input: dict) -> None:
 
         # Insert results info in db
         exploits = list(queue.keys())
-        print(queue)
+
         for exploit in exploits:
             attemps = queue[exploit]
             target_id = get_target_id(target)

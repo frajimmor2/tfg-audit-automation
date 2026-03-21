@@ -1,6 +1,6 @@
 # reporterman
 
-A command-line tool to automate system audits with Metasploit and Searchsploit. It is supported by some ollama LLMs.
+A command-line tool to automate system audits with Metasploit. It is supported by some ollama LLMs.
 
 ## Installation Guide
 
