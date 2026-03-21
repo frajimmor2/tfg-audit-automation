@@ -13,6 +13,7 @@ from reporterman.ollama_models.llm_handler import (
     exploit_selector_vuln,
     exploit_selector_soft,
 )
+from reporterman.modules.execution.execution import execution
 import ollama
 import time
 
@@ -61,7 +62,9 @@ def run(
     scan_output = reconnaissance(target, mode, ports)
     init_db()
     selected_exploits = data_analysis(scan_output)
-    print(selected_exploits)
+    print("Exploit selection finished")
+    execution(selected_exploits)
+    print("Execution finished")
 
 
 @app.command(

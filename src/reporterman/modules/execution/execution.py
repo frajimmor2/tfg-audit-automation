@@ -7,6 +7,7 @@ from reporterman.database.database import (
     get_vulnerability_id,
     insert_attemp,
     insert_llm_stats,
+    get_target_id,
 )
 
 """
@@ -39,11 +40,19 @@ def execution(input: dict) -> None:
             exploit_suggested += 3
 
         # Insert results info in db
-        exploits = list(queue.keys)
+        exploits = list(queue.keys())
+        print(queue)
         for exploit in exploits:
             attemps = queue[exploit]
-            vuln_id = get_vulnerability_id(target, attemps[0][2])
+            target_id = get_target_id(target)
+            vuln_id = get_vulnerability_id(target_id, attemps[0][2])
             insert_exploit(vuln_id, exploit)  # Store info
+
+            # Manage cases where an exploit exploits 2 vulnerabilities
+            if attemps[0][2] != attemps[-1][2]:
+                target_id = get_target_id(target)
+                vuln_id = get_vulnerability_id(target_id, attemps[-1][2])
+                insert_exploit(vuln_id, exploit)  # Store info
 
             for attemp in attemps:
                 insert_attemp(target, exploit, attemp)  # Store info

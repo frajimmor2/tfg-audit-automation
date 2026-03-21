@@ -170,12 +170,12 @@ def update_vulnerability(vuln: int) -> None:
     insert_value(update_cmd)
 
 
-def get_vulnerability_id(target: int, cve: str) -> int:
+def get_vulnerability_id(target_id: int, cve: str) -> int:
     get_cmd = f"""
     SELECT v.id
     FROM vulnerability v
     WHERE
-    v.target_id = {target}
+    v.target_id = {target_id}
     AND
     v.cve = '{cve}';
     """
@@ -184,13 +184,13 @@ def get_vulnerability_id(target: int, cve: str) -> int:
     return id
 
 
-def insert_exploit(vuln: int, exploit: str) -> None:
+def insert_exploit(vuln_id: int, exploit: str) -> None:
     insert_cmd = f"""
     INSERT INTO exploit (
         name,
         vuln_id) VALUES (
                 '{exploit}',
-                {vuln});
+                {vuln_id});
     """
     insert_value(insert_cmd)
 

@@ -12,7 +12,7 @@ exec_m_1_path = BASE_DIR / "exec_m_1.sh"
 def execute_exploit(
     script_path: str, exploit: str, target: str, lhost: str
 ) -> str:  # noqa
-    cmd = [f"./{script_path}", exploit, target, lhost]
+    cmd = [script_path, exploit, target, lhost]
     # This function will be wrapped by a try statement
     output = subprocess.Popen(
         cmd,
@@ -49,9 +49,10 @@ def check_execution(execution: str) -> str:
         return False
 
 
-def manage_queue(queue: dict, execution: list, cve: str) -> dict:
-    key = execution[1]
-    value = [execution[3], execution[2], cve]
+def manage_queue(queue: dict, execution: str, cve: str) -> dict:
+    executionl = execution.split(",")
+    key = executionl[1]
+    value = [executionl[3].strip(), executionl[2], cve]
     # payload, success, cve
 
     if key in queue:
