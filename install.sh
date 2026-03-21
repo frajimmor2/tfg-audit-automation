@@ -20,5 +20,7 @@ ollama create llm_list_parser -f llms/llm_list_parser
 chmod +x src/reporterman/modules/execution/exec_m.sh
 chmod +x src/reporterman/modules/execution/exec_m_0.sh
 chmod +x src/reporterman/modules/execution/exec_m_1.sh
+python3 -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
 pip install -e .
