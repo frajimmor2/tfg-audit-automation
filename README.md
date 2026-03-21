@@ -23,6 +23,7 @@ After modifing the enviroment you can coninue with the installation.
 ```bash
 chmod +x install.sh
 sudo ./install.sh
+source venv/bin/activate
 ```
 
 If you just wat to reinstall the models, just run this:

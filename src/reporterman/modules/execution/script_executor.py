@@ -1,3 +1,8 @@
+from reporterman.database.database import (
+    get_target_id,
+    insert_vulnerability,
+)
+from reporterman.modules.data_analysis.data_analysis import get_cve_description
 from pathlib import Path
 import subprocess
 import typer
@@ -7,6 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent
 exec_m_path = BASE_DIR / "exec_m.sh"
 exec_m_0_path = BASE_DIR / "exec_m_0.sh"
 exec_m_1_path = BASE_DIR / "exec_m_1.sh"
+get_cve_path = BASE_DIR / "get_cve.sh"
 
 
 def execute_exploit(
@@ -63,6 +69,34 @@ def manage_queue(queue: dict, execution: str, cve: str) -> dict:
     return queue
 
 
+def get_cve(exploit: str) -> list:
+    cmd = [get_cve_path, exploit]
+    try:
+        # This function will be wrapped by a try statement
+        output = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            stdin=subprocess.DEVNULL,
+        )
+        stdout, _ = output.communicate()
+    except Exception:
+        stdout = " , "
+
+    output = stdout.split(",")
+    # output = [cve, url]
+    return output
+
+
+def manage_no_cve(queue: dict, execution: str, cve: str, target: str) -> None:
+    exec = execution.split(",")
+    cve_info = get_cve(exec[1])
+    desc = get_cve_description(vuln[0])
+    target_id = get_target_id(target)
+    insert_vulnerability(target_id, aux_vuln, desc)  # Store info
+
+
 def manage_execution(
     selected: list,
     model_drift: int,
@@ -87,8 +121,9 @@ def manage_execution(
             if selected[1]:
                 queue = manage_queue(queue, execution, selected[1])
             else:
-                pass
-        # TODO: Manage not having CVE
+                manage_no_cve(queue, execution, selected[1], target)
+                queue = manage_queue(queue, execution, selected[1])
+ 
         else:
             out_model_d += 1
 
