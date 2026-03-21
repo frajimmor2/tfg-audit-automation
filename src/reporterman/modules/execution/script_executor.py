@@ -46,7 +46,6 @@ def execute_p1(exploit: str, target: str, lhost: str) -> str:
     return output
 
 
-# TODO: test this function
 def check_execution(execution: str) -> str:
     try:
         exec = execution.split(",")
