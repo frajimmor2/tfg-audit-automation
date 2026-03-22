@@ -18,8 +18,8 @@ def generate_frontpage(env: Environment) -> str:
 
     template = env.get_template("frontpage.html")
     html = template.render(
-            date=str(date.today()),
-            logo_path=logo_path_formatted)  # noqa
+        date=str(date.today()), logo_path=logo_path_formatted
+    )  # noqa
     return html
 
 
