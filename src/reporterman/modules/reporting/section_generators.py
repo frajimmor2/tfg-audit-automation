@@ -17,7 +17,9 @@ def generate_frontpage(env: Environment) -> str:
     logo_path_formatted = logo_file.resolve().as_uri()
 
     template = env.get_template("frontpage.html")
-    html = template.render(date=str(date.today()), logo_path=logo_path_formatted)
+    html = template.render(
+            date=str(date.today()),
+            logo_path=logo_path_formatted)  # noqa
     return html
 
 
