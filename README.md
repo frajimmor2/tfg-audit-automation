@@ -26,6 +26,17 @@ sudo ./install.sh
 source venv/bin/activate
 ```
 
+Usage:
+
+```bash
+reporterman --help
+```
+
+> [!IMPORTANT]
+>The changes in the code will be automatically updated. You will not need to reinstall to apply them.
+
+---
+
 If you just wat to reinstall the models, just run this:
 
 ```bash
@@ -38,12 +49,3 @@ ollama create exploit_selector_vuln -f llms/exploit_selector_vuln
 ollama create exploit_selector_soft -f llms/exploit_selector_soft
 ollama create llm_list_parser -f llms/llm_list_parser
 ```
-
-Usage:
-
-```bash
-reporterman --help
-```
-
-> [!IMPORTANT]
->The changes in the code will be automatically updated. You will not need to reinstall to apply them.
