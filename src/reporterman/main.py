@@ -69,7 +69,7 @@ def run(
     execution(selected_exploits)
     print("Execution finished")
     total = time.time() - start
-    total_min = int(total/60)
+    total_min = int(total / 60)
     print(f"Total execution time {total_min}")
 
 
@@ -108,7 +108,7 @@ def informal_test_generate_report():
 
     start = time.time()
     total = time.time() - start
-    total_min = int(total/60)
+    total_min = int(total / 60)
     generate_report(total_min)
 
 
