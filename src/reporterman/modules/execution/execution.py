@@ -58,7 +58,7 @@ def execution(input: dict) -> None:
             for attemp in attemps:
                 insert_attemp(target, exploit, attemp)  # Store info
                 # Update exploited vuln
-                if attemp[1] == 1 or attemp[1] == True:
+                if attemp[1] == 1 or attemp[1] is True:
                     vuln_id = get_vulnerability_id(target_id, attemp[2])
                     update_vulnerability(vuln_id)
 

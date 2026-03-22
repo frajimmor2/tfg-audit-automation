@@ -19,8 +19,8 @@ def generate_frontpage(env: Environment) -> str:
 
     template = env.get_template("frontpage.html")
     html = template.render(
-            date = str(date.today()),
-            logo_path = logo_path_formatted)
+            date=str(date.today()),
+            logo_path=logo_path_formatted)
     return html
 
 
@@ -34,10 +34,10 @@ def generate_executive_summary(env: Environment, exec_time: int) -> str:
 
     template = env.get_template("executive_summary.html")
     html = template.render(
-            date = str(date.today()),
+            date=str(date.today()),
             exec_time=exec_time,
-            targets = n_targets,
-            soft = n_soft,
-            vuln = n_vuln,
-            exploited = n_exploited_vuln)
+            targets=n_targets,
+            soft=n_soft,
+            vuln=n_vuln,
+            exploited=n_exploited_vuln)
     return html

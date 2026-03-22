@@ -13,7 +13,7 @@ templates_path = Path(__file__).parent / "templates"
 env = Environment(loader=FileSystemLoader(templates_path))
 
 
-def generate_report(exec_time: int,path: str = None):
+def generate_report(exec_time: int, path: str = None):
     if not path:
         path = os.getcwd()
 

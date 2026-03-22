@@ -70,6 +70,7 @@ def run(
     print("Execution finished")
     total = time.time() - start
     total_min = int(total/60)
+    print(f"Total execution time {total_min}")
 
 
 @app.command(

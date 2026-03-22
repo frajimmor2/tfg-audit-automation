@@ -99,7 +99,7 @@ def manage_no_cve(queue: dict, execution: str, target: str) -> None:
     desc = get_cve_description(exec[0])
     target_id = get_target_id(target)
     insert_vulnerability(target_id, cve_info, desc)  # Store info
-    return cve 
+    return cve
 
 
 def manage_execution(
