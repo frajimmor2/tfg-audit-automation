@@ -8,6 +8,7 @@ from reporterman.database.database import (
     insert_attemp,
     insert_llm_stats,
     get_target_id,
+    update_vulnerability,
 )
 
 """
@@ -56,6 +57,10 @@ def execution(input: dict) -> None:
 
             for attemp in attemps:
                 insert_attemp(target, exploit, attemp)  # Store info
+                # Update exploited vuln
+                if attemp[1] == 1 or attemp[1] == True:
+                    vuln_id = get_vulnerability_id(target_id, attemp[2])
+                    update_vulnerability(vuln_id)
 
     fail_rate = (model_drift / exploit_suggested) * 100
     insert_llm_stats(model_drift, exploit_suggested, fail_rate)
