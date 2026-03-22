@@ -39,3 +39,10 @@ def generate_executive_summary(env: Environment, exec_time: int) -> str:
         exploited=n_exploited_vuln,
     )
     return html
+
+
+def generate_audit_process_explanation(env: Environment) -> str:
+
+    template = env.get_template("audit_explanation.html")
+    html = template.render()
+    return html
