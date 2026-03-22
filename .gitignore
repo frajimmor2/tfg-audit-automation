@@ -13,3 +13,6 @@ src/reporterman.egg-info/
 
 # Database (i forgot lmao)
 src/reporterman/database/reporterman.db
+
+# reports just in case i forguet to remove them
+reporterman-audit-*.

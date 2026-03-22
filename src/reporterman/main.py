@@ -14,6 +14,7 @@ from reporterman.ollama_models.llm_handler import (
     exploit_selector_soft,
 )
 from reporterman.modules.execution.execution import execution
+from reporterman.modules.reporting.reporting import generate_report
 import ollama
 import time
 
@@ -95,6 +96,12 @@ def llm_time_execution_test():
     exploit_selector_soft("mysql port 3306 version 2.3", " ", client)  # noqa
     total = time.time() - start
     print(f"Total execution time: {total}")
+
+@app.command(
+        name="report-test", help="generate a report for testing purposes"  # noqa
+)
+def informal_test_generate_report():
+    generate_report()
 
 
 if __name__ == "__main__":
