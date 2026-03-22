@@ -7,7 +7,6 @@ from reporterman.modules.reporting.section_generators import (
     generate_frontpage,
 )
 
-
 templates_path = Path(__file__).parent / "templates"
 # Jinja env
 env = Environment(loader=FileSystemLoader(templates_path))
