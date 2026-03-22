@@ -1,4 +1,6 @@
-# reporterman
+<p align="center">
+  <img src="src/reporterman/modules/reporting/assets/logo.png" alt="Logo" width="400"/>
+</p>
 
 A command-line tool to automate system audits with Metasploit. It is supported by some ollama LLMs.
 
