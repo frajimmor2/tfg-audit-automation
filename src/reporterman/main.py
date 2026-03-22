@@ -97,6 +97,7 @@ def llm_time_execution_test():
     total = time.time() - start
     print(f"Total execution time: {total}")
 
+
 @app.command(
         name="report-test", help="generate a report for testing purposes"  # noqa
 )

@@ -15,7 +15,7 @@ env = Environment(loader=FileSystemLoader(templates_path))
 
 def generate_report(path: str = None):
     if not path:
-        path =  os.getcwd()
+        path = os.getcwd()
 
     report_name = f"reporterman-audit-{date.today()}.pdf"
     out_path = Path(path) / report_name

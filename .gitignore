@@ -15,4 +15,5 @@ src/reporterman.egg-info/
 src/reporterman/database/reporterman.db
 
 # reports just in case i forguet to remove them
+reporterman-audit*.
 reporterman-audit-*.
