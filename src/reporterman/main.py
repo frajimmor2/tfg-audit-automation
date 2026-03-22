@@ -56,16 +56,20 @@ def run(
         ),
     ] = "",
 ):
+    start = time.time()
     print("validating inputs")
     target_validation(target, mode)
     ports_validation(ports)
     print("Running reconnaissance module")
     scan_output = reconnaissance(target, mode, ports)
+    print("Selecting exploits")
     init_db()
     selected_exploits = data_analysis(scan_output)
     print("Exploit selection finished")
     execution(selected_exploits)
     print("Execution finished")
+    total = time.time() - start
+    total_min = int(total/60)
 
 
 @app.command(
@@ -100,7 +104,11 @@ def llm_time_execution_test():
 
 @app.command(name="report-test", help="generate a report for testing purposes")  # noqa
 def informal_test_generate_report():
-    generate_report()
+
+    start = time.time()
+    total = time.time() - start
+    total_min = int(total/60)
+    generate_report(total_min)
 
 
 if __name__ == "__main__":

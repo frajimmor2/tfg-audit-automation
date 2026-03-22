@@ -274,4 +274,45 @@ def get_llm_stats() -> dict:
     """
     stats = get_value(get_cmd)
     return stats
+
+
+def get_n_targets() -> int:
+    get_cmd = """
+    SELECT COUNT(*)
+    FROM target;
+    """
+    count = get_value(get_cmd)
+    total = count[0][0]
+    return total
+
+
+def get_n_software() -> int:
+    get_cmd = """
+    SELECT COUNT(*)
+    FROM software;
+    """
+    count = get_value(get_cmd)
+    total = count[0][0]
+    return total
+
+
+def get_n_vuln() -> int:
+    get_cmd = """
+    SELECT COUNT(*)
+    FROM vulnerability;
+    """
+    count = get_value(get_cmd)
+    total = count[0][0]
+    return total
+
+
+def get_n_exploited_vuln() -> int:
+    get_cmd = """
+    SELECT COUNT(*)
+    FROM vulnerability
+    WHERE exploited = TRUE;
+    """
+    count = get_value(get_cmd)
+    total = count[0][0]
+    return total
 # fmt: on
