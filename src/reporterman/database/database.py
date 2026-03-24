@@ -315,4 +315,47 @@ def get_n_exploited_vuln() -> int:
     count = get_value(get_cmd)
     total = count[0][0]
     return total
+
+
+def get_n_software_by_t(target_id: int) -> int:
+    get_cmd = f"""
+    SELECT COUNT(*)
+    FROM software
+    WHERE target_id = {target_id};
+    """
+    count = get_value(get_cmd)
+    total = count[0][0]
+    return total
+
+
+def get_n_vuln_by_t(target_id: int) -> int:
+    get_cmd = f"""
+    SELECT COUNT(*)
+    FROM vulnerability
+    WHERE target_id = {target_id};
+    """
+    count = get_value(get_cmd)
+    total = count[0][0]
+    return total
+
+
+def get_n_exploited_by_t(target_id: int) -> int:
+    get_cmd = f"""
+    SELECT COUNT(*)
+    FROM vulnerability
+    WHERE target_id = {target_id}
+    AND exploited = TRUE;
+    """
+    count = get_value(get_cmd)
+    total = count[0][0]
+    return total
+
+
+def get_targets_ip():
+    get_cmd = """
+    SELECT ip_addr
+    FROM target;
+    """
+    total = get_value(get_cmd)
+    return [row[0] for row in total]
 # fmt: on

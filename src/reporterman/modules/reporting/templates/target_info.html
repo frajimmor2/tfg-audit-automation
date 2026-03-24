@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>System {{ target_ip }}</h1>
+<h2>Collected Information</h2>
+<p>This target has been analyzed detecting {{ n_software }} software services and <strong>{{ n_vuln }} vulnerabilities, {{ n_exploited }} of them exploited</strong>. This is the obtained information from the system obtained via nmap:</p>
+
+<p><strong>vendor:</strong> {{ vendor }}</p>
+<p><strong>product:</strong> {{ product }}</p>
+<p><strong>version:</strong> {{ version }}</p>
+<p><strong>other info:</strong> {{ other_info }}</p>
+
+
+<h3>Software Services Information</h3>
+<p> The system {{ target_ip }} has {{ n_software }} software services currently running:</p>
+
+{% endblock %}

@@ -46,13 +46,11 @@ def execution(input: dict) -> None:
         for exploit in exploits:
             attemps = queue[exploit]
             target_id = get_target_id(target)
-            vuln_id = get_vulnerability_id(target_id, attemps[0][2])
-            insert_exploit(vuln_id, exploit)  # Store info
-
-            # Manage cases where an exploit exploits 2 vulnerabilities
-            if attemps[0][2] != attemps[-1][2]:
-                target_id = get_target_id(target)
-                vuln_id = get_vulnerability_id(target_id, attemps[-1][2])
+            vulns = set()
+            for att in attemps:
+                vulns.add(att[2])
+            for vuln in vulns:
+                vuln_id = get_vulnerability_id(target_id, vuln)
                 insert_exploit(vuln_id, exploit)  # Store info
 
             for attemp in attemps:
