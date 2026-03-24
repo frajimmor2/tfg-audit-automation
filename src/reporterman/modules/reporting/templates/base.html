@@ -5,7 +5,11 @@
         <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    {% block content %}{% endblock %}
- 
+    <div id="header">
+	<img src="{{ logo2_path }}" alt="Logo" class="mini">
+    </div>
+    <div id="content">
+        {% block content %}{% endblock %}
+     </div>
 </body>
 </html>

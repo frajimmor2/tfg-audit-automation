@@ -7,6 +7,10 @@
     @bottom-right {
         content: "";
     }
+
+    @top-right {
+        content: "";
+    }
 }
 
 @page {
@@ -19,9 +23,26 @@
         color: black;
         font-family: Arial, sans-serif;
     }
+
+    @top-right {
+        content: element(header);
+    }
+}
+
+#header {
+    position: running(header);
+    text-align: right;
+    margin-top: 20px;
+}
+
+#header img {
+    width: 80px;
+    height: auto;
+    margin-top: 20 px;
 }
 
 body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
 h1 { font-size: 48px; color: #2c3e50; page-break-before: always; }
 h2 { font-size: 36px; color: #34495e; }
 p { font-size: 14px; color: #34495e; text-align: justify; }
+.mini { width: 40px; }

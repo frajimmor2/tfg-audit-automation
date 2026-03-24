@@ -28,6 +28,9 @@ def generate_frontpage(env: Environment) -> str:
 
 
 def generate_executive_summary(env: Environment, exec_time: int) -> str:
+    
+    logo_file = assets_path / "logo2.png"
+    logo_path_formatted = logo_file.resolve().as_uri()
 
     # Get data
     n_targets = get_n_targets()
@@ -43,14 +46,18 @@ def generate_executive_summary(env: Environment, exec_time: int) -> str:
         soft=n_soft,
         vuln=n_vuln,
         exploited=n_exploited_vuln,
+        logo2_path=logo_path_formatted,
     )
     return html
 
 
 def generate_audit_process_explanation(env: Environment) -> str:
 
+    logo_file = assets_path / "logo2.png"
+    logo_path_formatted = logo_file.resolve().as_uri()
+
     template = env.get_template("audit_explanation.html")
-    html = template.render()
+    html = template.render(logo2_path=logo_path_formatted)
     return html
 
 
@@ -61,6 +68,9 @@ def generate_single_target_section(env: Environment, target_ip: str) -> str:
 
 
 def generate_target_title(env: Environment, target_ip: str) -> str:
+
+    logo_file = assets_path / "logo2.png"
+    logo_path_formatted = logo_file.resolve().as_uri()
 
     # Get data
     target = get_target(target_ip)
@@ -84,5 +94,6 @@ def generate_target_title(env: Environment, target_ip: str) -> str:
         n_software=n_software,
         n_vuln=n_vuln,
         n_exploited=n_exploited,
+        logo2_path=logo_path_formatted,
     )
     return html
