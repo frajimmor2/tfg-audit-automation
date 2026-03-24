@@ -28,10 +28,15 @@ sudo ./install.sh
 source venv/bin/activate
 ```
 
-Usage:
+Usage explanation:
 
 ```bash
 reporterman --help
+```
+
+Actual usage:
+```bash
+sudo ./venv/bin/reporterman run target
 ```
 
 > [!IMPORTANT]
