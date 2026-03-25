@@ -133,7 +133,7 @@ def generate_vuln_section(env: Environment, target_id: int) -> str:
 
     logo_file = assets_path / "logo2.png"
     logo_path_formatted = logo_file.resolve().as_uri()
-    
+
     # Get data
     n_vuln = get_n_vuln_by_t(target_id)
     n_exploited = get_n_exploited_by_t(target_id)
