@@ -10,6 +10,9 @@ from reporterman.database.database import (
     get_n_software_by_t,
     get_n_vuln_by_t,
     get_n_exploited_by_t,
+    get_target_id,
+    get_software,
+    get_target_ports,
 )
 
 assets_path = Path(__file__).parent / "assets"
@@ -61,12 +64,6 @@ def generate_audit_process_explanation(env: Environment) -> str:
     return html
 
 
-def generate_single_target_section(env: Environment, target_ip: str) -> str:
-
-    html = generate_target_title(env, target_ip)
-    return html
-
-
 def generate_target_title(env: Environment, target_ip: str) -> str:
 
     logo_file = assets_path / "logo2.png"
@@ -96,4 +93,47 @@ def generate_target_title(env: Environment, target_ip: str) -> str:
         n_exploited=n_exploited,
         logo2_path=logo_path_formatted,
     )
+    return html
+
+
+def manage_empty(input: str) -> str:
+    if input == None or input == "":
+        return "Unknown"
+    else:
+        return input
+
+
+def generate_service_info(env: Environment, target_id: int, port: str) -> str:
+
+    logo_file = assets_path / "logo2.png"
+    logo_path_formatted = logo_file.resolve().as_uri()
+    
+    # Get data
+    soft = get_software(target_id, port)
+    s_product = manage_empty(soft[0]["product"])
+    s_version = manage_empty(soft[0]["version"])
+    s_other_info = manage_empty(soft[0]["other_info"])
+    obs = "No"
+    if soft[0]["obsolete"]:
+        obs = "Yes"
+
+    template = env.get_template("soft_serv_info.html")
+    html = template.render(
+        product=s_product,
+        version=s_version,
+        other_info=s_other_info,
+        port=port,
+        obs=obs,
+        logo2_path=logo_path_formatted,
+    )
+    return html
+
+
+def generate_single_target_section(env: Environment, target_ip: str) -> str:
+
+    html = generate_target_title(env, target_ip)
+    target_id = get_target_id(target_ip)
+    ports = get_target_ports(target_id)
+    for port in ports:
+        html = html + generate_service_info(env, target_id, port)
     return html

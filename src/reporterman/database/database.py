@@ -129,6 +129,16 @@ def get_software(target: int, port: str) -> dict:
     return software
 
 
+def get_target_ports(target_id: int) -> list:
+    get_cmd = f"""
+    SELECT port
+    FROM software
+    WHERE target_id = {target_id};
+    """
+    total = get_value(get_cmd)
+    return [row[0] for row in total]
+
+
 def insert_vulnerability(target: int, vuln: list, desc: str) -> None:  # noqa
     insert_cmd = f"""
     INSERT INTO vulnerability (
