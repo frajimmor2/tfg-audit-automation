@@ -140,9 +140,9 @@ def generate_vuln_section(env: Environment, target_id: int) -> str:
 
     template = env.get_template("vuln_section.html")
     html = template.render(
-            n_vuln=n_vuln,
-            n_exploited=n_exploited,
-            logo2_path=logo_path_formatted,
+        n_vuln=n_vuln,
+        n_exploited=n_exploited,
+        logo2_path=logo_path_formatted,
     )
     return html
 
