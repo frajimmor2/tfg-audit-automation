@@ -12,7 +12,9 @@ from reporterman.database.database import (
     get_n_exploited_by_t,
     get_target_id,
     get_software,
+    get_vulnerability,
     get_target_ports,
+    get_target_cves,
 )
 
 assets_path = Path(__file__).parent / "assets"
@@ -147,12 +149,44 @@ def generate_vuln_section(env: Environment, target_id: int) -> str:
     return html
 
 
+def generate_vuln_info(env: Environment, cve: str, target_id: str) -> str:
+    
+    logo_file = assets_path / "logo2.png"
+    logo_path_formatted = logo_file.resolve().as_uri()
+
+    # Get Data
+    vuln = get_vulnerability(target_id, cve)
+    link = vuln[0]["link"]
+    desc = vuln[0]["description"]
+    expl = vuln[0]["exploited"]
+    if expl:
+        exp = "YES"
+    else:
+        exp = "NO"
+
+    template = env.get_template("vuln_info.html")
+    html = template.render(
+            cve=cve,
+            link=link,
+            desc=desc,
+            exp=exp,
+            logo2_path=logo_path_formatted,
+    )
+    return html
+
+
 def generate_single_target_section(env: Environment, target_ip: str) -> str:
 
     html = generate_target_title(env, target_ip)
     target_id = get_target_id(target_ip)
     ports = get_target_ports(target_id)
+
     for port in ports:
         html = html + generate_service_info(env, target_id, port)
+    
     html = html + generate_vuln_section(env, target_id)
+    cves = get_target_cves(target_id)
+    for cve in cves:
+        html = html + generate_vuln_info(env, cve, target_id)
+
     return html

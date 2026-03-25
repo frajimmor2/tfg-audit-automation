@@ -180,6 +180,16 @@ def update_vulnerability(vuln: int) -> None:
     insert_value(update_cmd)
 
 
+def get_target_cves(target_id: int) -> list:
+    get_cmd = f"""
+    SELECT cve
+    FROM vulnerability
+    WHERE target_id = {target_id};
+    """
+    total = get_value(get_cmd)
+    return [row[0] for row in total]
+
+
 def get_vulnerability_id(target_id: int, cve: str) -> int:
     get_cmd = f"""
     SELECT v.id
