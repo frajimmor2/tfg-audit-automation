@@ -181,7 +181,7 @@ def generate_vuln_info(env: Environment, cve: str, target_id: str) -> str:
     return html
 
 
-def generate_exploit_sections(env: Environment, vuln_id: int, name: str) -> str:  ~ noqa
+def generate_exploit_sections(env: Environment, vuln_id: int, name: str) -> str:  # noqa
 
     logo_file = assets_path / "logo2.png"
     logo_path_formatted = logo_file.resolve().as_uri()
