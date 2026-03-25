@@ -129,6 +129,24 @@ def generate_service_info(env: Environment, target_id: int, port: str) -> str:
     return html
 
 
+def generate_vuln_section(env: Environment, target_id: int) -> str:
+
+    logo_file = assets_path / "logo2.png"
+    logo_path_formatted = logo_file.resolve().as_uri()
+    
+    # Get data
+    n_vuln = get_n_vuln_by_t(target_id)
+    n_exploited = get_n_exploited_by_t(target_id)
+
+    template = env.get_template("vuln_section.html")
+    html = template.render(
+            n_vuln=n_vuln,
+            n_exploited=n_exploited,
+            logo2_path=logo_path_formatted,
+    )
+    return html
+
+
 def generate_single_target_section(env: Environment, target_ip: str) -> str:
 
     html = generate_target_title(env, target_ip)
@@ -136,4 +154,5 @@ def generate_single_target_section(env: Environment, target_ip: str) -> str:
     ports = get_target_ports(target_id)
     for port in ports:
         html = html + generate_service_info(env, target_id, port)
+    html = html + generate_vuln_section(env, target_id)
     return html

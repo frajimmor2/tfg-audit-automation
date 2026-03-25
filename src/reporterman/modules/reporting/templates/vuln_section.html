@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Vulnerabilities</h2>
+<p>{{ n_vuln }} vulnerabilities where identified and {{ n_exploited }} of them  where exploited. Each attack has been performed using an exploit from Metasploit. For every selected exploit, between one and three different payloads have been executed in order to increase the chances of a successful compromise and to evaluate different exploitation scenarios. This approach allows for a more comprehensive assessment of the target system’s vulnerabilities, as different payloads may trigger different behaviors or bypass certain protections.</p>
+
+{% endblock %}
