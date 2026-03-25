@@ -19,6 +19,7 @@ from reporterman.database.database import (
     get_exp_vuln,
     get_attemps,
     get_exploit_id_short,
+    get_llm_stats,
 )
 
 assets_path = Path(__file__).parent / "assets"
@@ -214,6 +215,29 @@ def generate_exploit_sections(env: Environment, vuln_id: int, name: str) -> str:
     return html
 
 
+def generate_stats_section(env: Environment) -> str:
+
+    logo_file = assets_path / "logo2.png"
+    logo_path_formatted = logo_file.resolve().as_uri()
+
+    # Get Data
+    stats = get_llm_stats()
+    md = stats[0]["model_drift"]
+    total = stats[0]["total_attemps"]
+    fr = stats[0]["fail_rate"]
+    fr = f"{fr:.2f}"
+
+    template = env.get_template("stats_section.html")
+    html = template.render(
+        md=md,
+        total=total,
+        fr=fr,
+        logo2_path=logo_path_formatted,
+    )
+
+    return html
+
+
 def generate_single_target_section(env: Environment, target_ip: str) -> str:
 
     html = generate_target_title(env, target_ip)
@@ -231,5 +255,7 @@ def generate_single_target_section(env: Environment, target_ip: str) -> str:
         exploits = get_exp_vuln(vuln_id)
         for exploit in exploits:
             html = html + generate_exploit_sections(env, vuln_id, exploit)
+
+    html = html + generate_stats_section(env)
 
     return html

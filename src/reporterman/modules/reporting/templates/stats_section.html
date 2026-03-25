@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>LLM Stats</h1>
+
+<p>This section provides detailed information to evaluate the actual performance of the Ollama models. During the testing phase, the models attempted a total of {{ total }} executions. Out of these, {{ md }} attempts were unsuccessful, resulting in a <strong>{{ fr }}% failure rate</strong>. The analysis of these failures helps to identify potential weaknesses in the model's decision-making process and highlights areas where improvements could be made. Furthermore, tracking both successful and failed attempts provides a comprehensive overview of the model's reliability and consistency under different conditions. 
+This performance overview is essential for understanding the robustness of the models and for planning further optimizations or adjustments in the workflow.</p>
+
+<p>We would like to sincerely thank you for using Reporterman. Your trust in our tool allows us to continuously improve and provide efficient, reliable solutions for audit automation. We hope this report helps you gain clear insights and supports your decision-making process. Your feedback is always welcome, as it helps us enhance the experience and functionality of Reporterman for all users.</p>
+{% endblock %}
