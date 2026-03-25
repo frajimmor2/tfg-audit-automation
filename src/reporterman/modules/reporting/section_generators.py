@@ -171,11 +171,11 @@ def generate_vuln_info(env: Environment, cve: str, target_id: str) -> str:
 
     template = env.get_template("vuln_info.html")
     html = template.render(
-            cve=cve,
-            link=link,
-            desc=desc,
-            exp=exp,
-            logo2_path=logo_path_formatted,
+        cve=cve,
+        link=link,
+        desc=desc,
+        exp=exp,
+        logo2_path=logo_path_formatted,
     )
 
     return html
@@ -192,8 +192,8 @@ def generate_exploit_sections(env: Environment, vuln_id: int, name: str) -> str:
 
     template = env.get_template("exploit_section.html")
     html = template.render(
-            name=name,
-            logo2_path=logo_path_formatted,
+        name=name,
+        logo2_path=logo_path_formatted,
     )
     for attemp in attemps:
 
@@ -208,7 +208,8 @@ def generate_exploit_sections(env: Environment, vuln_id: int, name: str) -> str:
         html = html + template2.render(
             payload=payload,
             success=s,
-            logo2_path=logo_path_formatted,)
+            logo2_path=logo_path_formatted,
+        )
 
     return html
 
