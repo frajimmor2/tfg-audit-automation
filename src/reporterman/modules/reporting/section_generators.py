@@ -31,7 +31,7 @@ def generate_frontpage(env: Environment) -> str:
 
 
 def generate_executive_summary(env: Environment, exec_time: int) -> str:
-    
+
     logo_file = assets_path / "logo2.png"
     logo_path_formatted = logo_file.resolve().as_uri()
 
@@ -71,7 +71,7 @@ def generate_target_title(env: Environment, target_ip: str) -> str:
 
     # Get data
     target = get_target(target_ip)
-    target_vendor = target[0]["vendor"] 
+    target_vendor = target[0]["vendor"]
     target_product = target[0]["product"]
     target_version = target[0]["version"]
     target_other_info = target[0]["other_info"]
@@ -97,7 +97,7 @@ def generate_target_title(env: Environment, target_ip: str) -> str:
 
 
 def manage_empty(input: str) -> str:
-    if input == None or input == "":
+    if input is None or input == "":
         return "Unknown"
     else:
         return input
@@ -107,7 +107,7 @@ def generate_service_info(env: Environment, target_id: int, port: str) -> str:
 
     logo_file = assets_path / "logo2.png"
     logo_path_formatted = logo_file.resolve().as_uri()
-    
+
     # Get data
     soft = get_software(target_id, port)
     s_product = manage_empty(soft[0]["product"])
