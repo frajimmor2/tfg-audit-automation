@@ -228,6 +228,31 @@ def get_exploit(vuln: int, name: str) -> dict:
     return exploit
 
 
+def get_exp_vuln(vuln_id: int) -> list:
+    get_cmd = f"""
+    SELECT name
+    FROM exploit
+    WHERE vuln_id = {vuln_id};
+    """
+    total = get_value(get_cmd)
+    return [row[0] for row in total]
+
+
+def get_exploit_id_short(name: str, vuln_id: int) -> int:
+    get_cmd = f"""
+    SELECT e.id
+    FROM exploit e
+    WHERE
+    e.vuln_id = {vuln_id}
+    AND
+    e.name = '{name}';
+    """
+    id = get_value(get_cmd)
+    id = id[0]["id"]
+    return id
+
+
+
 def get_exploit_id(name: str, cve: str, target: str) -> int:
     target_id = get_target_id(target)
     vuln_id = get_vulnerability_id(target_id, cve)
@@ -267,6 +292,17 @@ def get_attemp(exploit_id, payload) -> dict:
     a.exploit_id = {exploit_id}
     AND
     a.payload = '{payload}';
+    """
+    attemp = get_value(get_cmd)
+    return attemp
+
+
+def get_attemps(exploit_id) -> list:
+    get_cmd = f"""
+    SELECT *
+    FROM attemp
+    WHERE
+    exploit_id = {exploit_id}
     """
     attemp = get_value(get_cmd)
     return attemp
@@ -371,7 +407,7 @@ def get_n_exploited_by_t(target_id: int) -> int:
     return total
 
 
-def get_targets_ip():
+def get_targets_ip() -> list:
     get_cmd = """
     SELECT ip_addr
     FROM target;

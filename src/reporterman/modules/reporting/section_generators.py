@@ -15,6 +15,10 @@ from reporterman.database.database import (
     get_vulnerability,
     get_target_ports,
     get_target_cves,
+    get_vulnerability_id,
+    get_exp_vuln,
+    get_attemps,
+    get_exploit_id_short,
 )
 
 assets_path = Path(__file__).parent / "assets"
@@ -146,6 +150,7 @@ def generate_vuln_section(env: Environment, target_id: int) -> str:
         n_exploited=n_exploited,
         logo2_path=logo_path_formatted,
     )
+
     return html
 
 
@@ -176,6 +181,38 @@ def generate_vuln_info(env: Environment, cve: str, target_id: str) -> str:
     return html
 
 
+def generate_exploit_sections(env: Environment, vuln_id: int, name: str) -> str:
+
+    logo_file = assets_path / "logo2.png"
+    logo_path_formatted = logo_file.resolve().as_uri()
+
+    # Get Data
+    exploit_id = get_exploit_id_short(name, vuln_id)
+    attemps = get_attemps(exploit_id)
+
+    template = env.get_template("exploit_section.html")
+    html = template.render(
+            name=name,
+            logo2_path=logo_path_formatted,
+    )
+    for attemp in attemps:
+
+        payload = attemp["payload"]
+        success = attemp["success"]
+        if success:
+            s = "YES"
+        else:
+            s = "NO"
+
+        template2 = env.get_template("attemp.html")
+        html = html + template2.render(
+            payload=payload,
+            success=s,
+            logo2_path=logo_path_formatted,)
+
+    return html
+
+
 def generate_single_target_section(env: Environment, target_ip: str) -> str:
 
     html = generate_target_title(env, target_ip)
@@ -184,10 +221,14 @@ def generate_single_target_section(env: Environment, target_ip: str) -> str:
 
     for port in ports:
         html = html + generate_service_info(env, target_id, port)
-    
+
     html = html + generate_vuln_section(env, target_id)
     cves = get_target_cves(target_id)
     for cve in cves:
         html = html + generate_vuln_info(env, cve, target_id)
+        vuln_id = get_vulnerability_id(target_id, cve)
+        exploits = get_exp_vuln(vuln_id)
+        for exploit in exploits:
+            html = html + generate_exploit_sections(env, vuln_id, exploit)
 
     return html
