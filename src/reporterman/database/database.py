@@ -252,7 +252,6 @@ def get_exploit_id_short(name: str, vuln_id: int) -> int:
     return id
 
 
-
 def get_exploit_id(name: str, cve: str, target: str) -> int:
     target_id = get_target_id(target)
     vuln_id = get_vulnerability_id(target_id, cve)
