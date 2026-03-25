@@ -108,6 +108,7 @@ def llm_time_execution_test():
     print(f"Total execution time: {total}")
 
 
+"""
 @app.command(name="report-test", help="generate a report for testing purposes")  # noqa
 def informal_test_generate_report():
 
@@ -115,7 +116,7 @@ def informal_test_generate_report():
     total = time.time() - start
     total_min = int(total / 60)
     generate_report(total_min)
-
+"""
 
 if __name__ == "__main__":
     app()

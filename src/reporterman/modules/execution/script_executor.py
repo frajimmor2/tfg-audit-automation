@@ -94,7 +94,7 @@ def manage_no_cve(queue: dict, execution: str, target: str) -> None:
     if not cve_info[0]:
         cve = "CVE-0000-0000"
         cve_info[0] = cve
-        desc = "This invented CVE, manages those exploits that couldn't be matched with a vulnerability."
+        desc = "This invented CVE, manages those exploits that couldn't be matched with a vulnerability."  # noqa
     else:
         cve = cve_info[0]
         desc = get_cve_description(exec[0])
