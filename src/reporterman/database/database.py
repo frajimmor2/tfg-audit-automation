@@ -42,6 +42,16 @@ def init_db() -> None:
         connect.execute(CREATE_ATTEMP_TABLE)
 
 
+def drop_db() -> None:
+    with get_connection() as connect:
+        connect.execute(DROP_EXPLOIT)
+        connect.execute(DROP_VULNERABILITY)
+        connect.execute(DROP_SOFTWARE)
+        connect.execute(DROP_TARGET)
+        connect.execute(DROP_ATTEMP)
+        connect.execute(DROP_STATS)
+
+
 def insert_value(insert_cmd: str) -> None:
     with get_connection() as connect:
         connect.execute(insert_cmd)

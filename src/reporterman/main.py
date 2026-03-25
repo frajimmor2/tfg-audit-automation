@@ -7,7 +7,10 @@ from reporterman.input_validations import (
 )
 from reporterman.modules.reconnaissance.reconnaissance import reconnaissance
 from reporterman.modules.data_analysis.data_analysis import data_analysis
-from reporterman.database.database import init_db
+from reporterman.database.database import (
+    init_db,
+    drop_db,
+)
 from reporterman.ollama_models.llm_handler import (
     soft_obs_analyzer,
     exploit_selector_vuln,
@@ -72,6 +75,7 @@ def run(
     total_min = int(total / 60)
     print(f"Total execution time {total_min}")
     generate_report(total_min)
+    drop_db()
 
 
 @app.command(
