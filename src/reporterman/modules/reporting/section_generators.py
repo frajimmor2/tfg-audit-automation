@@ -172,6 +172,7 @@ def generate_vuln_info(env: Environment, cve: str, target_id: str) -> str:
             exp=exp,
             logo2_path=logo_path_formatted,
     )
+
     return html
 
 
@@ -183,7 +184,7 @@ def generate_single_target_section(env: Environment, target_ip: str) -> str:
 
     for port in ports:
         html = html + generate_service_info(env, target_id, port)
-
+    
     html = html + generate_vuln_section(env, target_id)
     cves = get_target_cves(target_id)
     for cve in cves:
