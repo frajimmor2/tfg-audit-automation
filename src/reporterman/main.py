@@ -80,7 +80,9 @@ def run(
     scan_output = reconnaissance(target, mode, ports)
     current = time.time() - start
     print("-" * 100)
-    show_msg(f"Reconnaissance module complete. Current execution time: {current}")  # noqa
+    show_msg(
+        f"Reconnaissance module complete. Current execution time: {current}"
+    )  # noqa
     show_msg("Selecting exploits")
     init_db()
     selected_exploits = data_analysis(scan_output)

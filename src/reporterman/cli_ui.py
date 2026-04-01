@@ -5,8 +5,8 @@ import typer
 
 def banner() -> None:
 
-    f = Figlet(font='slant')
-    banner = f.renderText('reporterman')
+    f = Figlet(font="slant")
+    banner = f.renderText("reporterman")
     print(Fore.YELLOW + banner + Style.RESET_ALL)
 
 
