@@ -2,7 +2,10 @@
   <img src="src/reporterman/modules/reporting/assets/logo.png" alt="Logo" width="400"/>
 </p>
 
-A command-line tool to automate system audits with Metasploit. It is supported by some ollama LLMs.
+[![Compatibility](https://img.shields.io/badge/python-3.12.3-brightgreen.svg)](https://github.com/frajimmor2/tfg-audit-automation)
+![](https://img.shields.io/github/v/release/frajimmor2/tfg-audit-automation)
+
+A **command-line tool** designed to **automate system audits** using Metasploit, enhanced with the support of local Ollama LLMs. Reporterman enables you to perform complete black-box audits effortlessly and generate a comprehensive PDF report—all **with a single command**.
 
 ## Installation Guide
 
@@ -28,19 +31,22 @@ sudo ./install.sh
 source venv/bin/activate
 ```
 
+> [!IMPORTANT]
+>The changes in the code will be automatically updated. You will not need to reinstall to apply them.
+
 Usage explanation:
 
 ```bash
 reporterman --help
 ```
+## Correct Use Guide
+
+When performing a black-box audit, root privileges are typically required. To ensure a proper and uninterrupted workflow, it is highly recommended to run Reporterman with elevated permissions using sudo.
 
 Actual usage:
 ```bash
 sudo ./venv/bin/reporterman run target
 ```
-
-> [!IMPORTANT]
->The changes in the code will be automatically updated. You will not need to reinstall to apply them.
 
 ---
 
