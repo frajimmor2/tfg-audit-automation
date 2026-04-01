@@ -5,6 +5,10 @@ from reporterman.input_validations import (
     target_validation,
     ports_validation,
 )
+from reporterman.cli_ui import (
+    banner,
+    show_msg,
+)
 from reporterman.modules.reconnaissance.reconnaissance import reconnaissance
 from reporterman.modules.data_analysis.data_analysis import data_analysis
 from reporterman.database.database import (
@@ -63,26 +67,33 @@ def run(
         typer.Option(
             "-path",
             "--path",
-            help="Output path for the generated report \
-                        in pdf format",
+            help="Output path for the generated report in pdf format",  # noqa
         ),
     ] = None,
 ):
     start = time.time()
-    print("validating inputs")
+    banner()
+    show_msg("validating inputs")
     target_validation(target, mode)
     ports_validation(ports)
-    print("Running reconnaissance module")
+    show_msg("Running reconnaissance module")
     scan_output = reconnaissance(target, mode, ports)
-    print("Selecting exploits")
+    current = time.time() - start
+    print("-" * 100)
+    show_msg(f"Reconnaissance module complete. Current execution time: {current}")
+    show_msg("Selecting exploits")
     init_db()
     selected_exploits = data_analysis(scan_output)
-    print("Exploit selection finished")
+    current = time.time() - start
+    print("-" * 100)
+    show_msg(f"Exploit selection finished. Current execution time: {current}")
+    show_msg("Executing selected exploits")
     execution(selected_exploits)
-    print("Execution finished")
+    print("-" * 100)
+    show_msg("Execution finished")
     total = time.time() - start
     total_min = int(total / 60)
-    print(f"Total execution time {total_min}")
+    show_msg(f"Total execution time (minutes): {total_min}")
     generate_report(total_min, path)
     drop_db()
 
@@ -96,25 +107,25 @@ def llm_time_execution_test():
     out1 = soft_obs_analyzer("service: telnet   other_info: ", client)
     out2 = soft_obs_analyzer("service: rexec   other_info: ", client)
     total = time.time() - start
-    print("Expected soft analyzer outputs 1, 1")
-    print(f"Actual outputs: {out1}, {out2}")
-    print(f"Total execution time: {total}")
+    show_msg("Expected soft analyzer outputs 1, 1")
+    show_msg(f"Actual outputs: {out1}, {out2}")
+    show_msg(f"Total execution time: {total}")
 
     print("-" * 100)
 
     start = time.time()
-    print("Running exploit selector vuln")
+    show_msg("Running exploit selector vuln")
     exploit_selector_vuln("CVE-2022-0540", client)  # noqa
     total = time.time() - start
-    print(f"Total execution time: {total}")
+    show_msg(f"Total execution time: {total}")
 
     print("-" * 100)
 
     start = time.time()
-    print("Running exploit selector soft")
+    show_msg("Running exploit selector soft")
     exploit_selector_soft("mysql port 3306 version 2.3", " ", client)  # noqa
     total = time.time() - start
-    print(f"Total execution time: {total}")
+    show_msg(f"Total execution time: {total}")
 
 
 """
