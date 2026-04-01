@@ -58,6 +58,15 @@ def run(
                         It applies to each system in the modes 1 and 2",
         ),
     ] = "",
+    path: Annotated[
+        str,
+        typer.Option(
+            "-path",
+            "--path",
+            help="Output path for the generated report \
+                        in pdf format",
+        ),
+    ] = None,
 ):
     start = time.time()
     print("validating inputs")
@@ -74,7 +83,7 @@ def run(
     total = time.time() - start
     total_min = int(total / 60)
     print(f"Total execution time {total_min}")
-    generate_report(total_min)
+    generate_report(total_min, path)
     drop_db()
 
 
