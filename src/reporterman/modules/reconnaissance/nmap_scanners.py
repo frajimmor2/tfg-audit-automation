@@ -43,12 +43,14 @@ def os_scan(target: str) -> list:
     for line in listed_scan:
         match line:
             case _ if "OS CPE:" in line:
+                line = line.replace("'", "")
                 parts = line.split(":")
                 vendor = parts[3]
                 product = parts[4]
                 version = parts[5]
             case _ if ("OS details:" in line) or ("Service Info:" in line):
                 if other != "":
+                    line = line.replace("'", "")
                     other = other + " " + line
                 else:
                     other = line
@@ -78,6 +80,7 @@ def version_scan_cpe_parser(scan_results: list[str]) -> list:
     current_cpe = None
     for line in scan_results:
         # Is port
+        line = line.replace("'", "")
         if line and line[0].isdigit() and ("/tcp" in line or "/udp" in line):
             if current_cpe:
                 output_cpe.append(current_cpe)
@@ -115,6 +118,7 @@ def version_scan(target: str, ports: str) -> list:
 def vulns_scan_parser(scan_results: list[str]) -> list:
     output = []
     for line in scan_results:
+        line = line.replace("'", "")
         try:
             info = line.split()
             cond1 = info[0] == "|"
