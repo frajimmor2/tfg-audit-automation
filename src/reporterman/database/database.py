@@ -52,9 +52,9 @@ def drop_db() -> None:
         connect.execute(DROP_STATS)
 
 
-def insert_value(insert_cmd: str) -> None:
+def insert_value(insert_cmd: str, params: tuple) -> None:
     with get_connection() as connect:
-        connect.execute(insert_cmd)
+        connect.execute(insert_cmd, params)
 
 
 def get_value(get_cmd: str) -> None:
@@ -65,22 +65,24 @@ def get_value(get_cmd: str) -> None:
 
 # fmt: off
 def insert_target(target: str, target_info: list) -> None:
-    cmd = f"""
+    insert_cmd = """
     INSERT INTO target (
-            ip_addr,
-            vendor,
-            product,
-            version,
-            other_info
-            ) VALUES (
-                    '{target}',
-                    '{target_info[0]}',
-                    '{target_info[1]}',
-                    '{target_info[2]}',
-                    '{target_info[3]}'
-            );
+        ip_addr,
+        vendor,
+        product,
+        version,
+        other_info
+    ) VALUES (?, ?, ?, ?, ?);
     """
-    insert_value(cmd)
+
+    params = (
+        target,
+        target_info[0],
+        target_info[1],
+        target_info[2],
+        target_info[3]
+    )
+    insert_value(insert_cmd, params)
 
 
 # Now is for test purposes only
@@ -107,23 +109,26 @@ def get_target_id(target: str) -> int:
 
 # Now is for test purposes only
 def insert_software(target: int, soft: list, obs: bool) -> None:
-    insert_cmd = f"""
+    insert_cmd = """
     INSERT INTO software (
-            product,
-            version,
-            other_info,
-            port,
-            obsolete,
-            target_id) VALUES (
-                    '{soft[0]}',
-                    '{soft[1]}',
-                    '{soft[2]}',
-                    '{soft[3]}',
-                    {obs},
-                    {target}
-                    );
+        product,
+        version,
+        other_info,
+        port,
+        obsolete,
+        target_id
+    ) VALUES (?, ?, ?, ?, ?, ?);
     """
-    insert_value(insert_cmd)
+
+    params = (
+        soft[0],
+        soft[1],
+        soft[2],
+        soft[3],
+        obs,
+        target
+    )
+    insert_value(insert_cmd, params)
 
 
 def get_software(target: int, port: str) -> dict:
@@ -150,21 +155,24 @@ def get_target_ports(target_id: int) -> list:
 
 
 def insert_vulnerability(target: int, vuln: list, desc: str) -> None:  # noqa
-    insert_cmd = f"""
+    insert_cmd = """
     INSERT INTO vulnerability (
-            cve,
-            link,
-            description,
-            exploited,
-            target_id) VALUES (
-                    '{vuln[0]}',
-                    '{vuln[1]}',
-                    '{desc}',
-                    FALSE,
-                    {target}
-                    );
+        cve,
+        link,
+        description,
+        exploited,
+        target_id
+    ) VALUES (?, ?, ?, ?, ?);
     """
-    insert_value(insert_cmd)
+
+    params = (
+        vuln[0],
+        vuln[1],
+        desc,
+        False,
+        target
+    )
+    insert_value(insert_cmd, params)
 
 
 def get_vulnerability(target: int, cve: str) -> dict:
@@ -181,13 +189,14 @@ def get_vulnerability(target: int, cve: str) -> dict:
 
 
 def update_vulnerability(vuln: int) -> None:
-    update_cmd = f"""
+    update_cmd = """
     UPDATE vulnerability
     SET exploited = TRUE
-    WHERE
-    id = {vuln};
+    WHERE id = ?;
     """
-    insert_value(update_cmd)
+
+    params = (vuln,)
+    insert_value(update_cmd, params)
 
 
 def get_target_cves(target_id: int) -> list:
@@ -215,14 +224,18 @@ def get_vulnerability_id(target_id: int, cve: str) -> int:
 
 
 def insert_exploit(vuln_id: int, exploit: str) -> None:
-    insert_cmd = f"""
+    insert_cmd = """
     INSERT INTO exploit (
         name,
-        vuln_id) VALUES (
-                '{exploit}',
-                {vuln_id});
+        vuln_id
+    ) VALUES (?, ?);
     """
-    insert_value(insert_cmd)
+
+    params = (
+        exploit,
+        vuln_id
+    )
+    insert_value(insert_cmd, params)
 
 
 def get_exploit(vuln: int, name: str) -> dict:
@@ -280,16 +293,20 @@ def get_exploit_id(name: str, cve: str, target: str) -> int:
 
 def insert_attemp(target: str, name: str, exec: list) -> None:
     exploit_id = get_exploit_id(name, exec[2], target)
-    insert_cmd = f"""
+    insert_cmd = """
     INSERT INTO attemp (
-            payload,
-            success,
-            exploit_id) VALUES (
-                    '{exec[0]}',
-                    {exec[1]},
-                    {exploit_id});
+        payload,
+        success,
+        exploit_id
+    ) VALUES (?, ?, ?);
     """
-    insert_value(insert_cmd)
+
+    params = (
+        exec[0],
+        exec[1],
+        exploit_id
+    )
+    insert_value(insert_cmd, params)
 
 
 # For test purposes
@@ -318,16 +335,20 @@ def get_attemps(exploit_id) -> list:
 
 
 def insert_llm_stats(drift: int, total_attemps: int, fail_rate: float) -> None:
-    insert_cmd = f"""
+    insert_cmd = """
     INSERT INTO stats (
-            model_drift,
-            total_attemps,
-            fail_rate) VALUES (
-                    {drift},
-                    {total_attemps},
-                    {fail_rate});
+        model_drift,
+        total_attemps,
+        fail_rate
+    ) VALUES (?, ?, ?);
     """
-    insert_value(insert_cmd)
+
+    params = (
+        drift,
+        total_attemps,
+        fail_rate
+    )
+    insert_value(insert_cmd, params)
 
 
 # There is only 1 item always
