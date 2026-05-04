@@ -29,7 +29,7 @@ def soft_obs_handler(input: str, client) -> int:
 
 
 def soft_obs_analyzer(input: str, client) -> int:
-   obs_confidence = 0
+    obs_confidence = 0
     for i in range(7):
         obs_confidence += soft_obs_handler(input, client)
 

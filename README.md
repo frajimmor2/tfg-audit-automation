@@ -23,7 +23,7 @@ cd tfg-audit-automation
 cp .env.example .env
 ```
 
-After modifing the enviroment you can coninue with the installation.
+After modifing the enviroment you can continue with the installation.
 
 ```bash
 chmod +x install.sh
