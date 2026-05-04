@@ -14,6 +14,7 @@ from dotenv import load_dotenv
 import os
 import requests
 import ollama
+import time
 
 load_dotenv()
 
@@ -88,6 +89,8 @@ def data_analysis(input_info: dict) -> dict:
                 vuln[1] + f" https://nvd.nist.gov/vuln/detail/{vuln[0]}"
             ).strip()  # noqa
             desc = get_cve_description(vuln[0])
+            # Small pause to ensure that it is enough time between requests
+            time.sleep(1.5)
             insert_vulnerability(target_id, aux_vuln, desc)  # Store info
             for i in range(3):  # Ask 3 times due to the fail rate
                 selected_exploits = exploit_selector_vuln(vuln[0], client)  # noqa
