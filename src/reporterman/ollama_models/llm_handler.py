@@ -34,7 +34,7 @@ def soft_obs_analyzer(input: str, client) -> int:
         obs_confidence += soft_obs_handler(input, client)
 
     obs_confidence /= 7
-    return round(obs_confidence) 
+    return round(obs_confidence)
 
 
 def exploit_selector_vuln(cve: str, client) -> list:
