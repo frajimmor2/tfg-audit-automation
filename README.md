@@ -39,6 +39,14 @@ Usage explanation:
 ```bash
 reporterman --help
 ```
+The `llms-time-exec-test` command runs a series of tests that simulate the average processing workload performed by the models. It then displays the time required to complete these tests.
+
+If this test takes too long to execute (several minutes), it is an indication that the hardware is not powerful enough to properly run the tool.
+
+It is estimated that for each audited software service, there is 1 call to the obsolescence review model, 3 calls to the exploit selector based on vulnerabilities, and 3 calls to the exploit selector based on service information.
+
+With this information, it is possible to estimate the total time required to perform an audit, knowing the number of services being audited.
+
 ## Correct Use Guide
 
 When performing a black-box audit, root privileges are typically required. To ensure a proper and uninterrupted workflow, it is highly recommended to run Reporterman with elevated permissions using sudo.
