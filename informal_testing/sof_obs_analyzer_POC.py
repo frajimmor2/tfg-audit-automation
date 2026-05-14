@@ -1,5 +1,6 @@
 import ollama
 import time
+
 # Initialize the Ollama client
 start = time.time()
 client = ollama.Client()
@@ -9,7 +10,11 @@ print(f"Setup client: {period} seconds")
 
 # Define model and the input prompt
 model = "soft_obs_analyzer"
-prompt = ["service: telnet   other_info: ", "service: rexec   other_info: ", "service: ssh    other_info: "]
+prompt = [
+    "service: telnet   other_info: ",
+    "service: rexec   other_info: ",
+    "service: ssh    other_info: ",
+]
 
 # Send the query to the model
 start = time.time()

@@ -6,7 +6,6 @@ tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModel.from_pretrained(model_name)
 
 
-
 def main():
     parser = argparse.ArgumentParser(description="CLI para usar el modelo DeepSeek V3")
     parser.add_argument("input", type=str, help="Texto de entrada para el modelo")
@@ -17,6 +16,7 @@ def main():
     outputs = model(**inputs)
 
     print(outputs)
+
 
 if __name__ == "__main__":
     main()

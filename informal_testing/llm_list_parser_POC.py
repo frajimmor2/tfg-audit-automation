@@ -1,5 +1,6 @@
 import ollama
 import time
+
 # Initialize the Ollama client
 start = time.time()
 client = ollama.Client()
@@ -9,7 +10,11 @@ print(f"Setup client: {period} seconds")
 
 # Define model and the input prompt
 model = "llm_list_parser"
-prompt = ["exploi1,exploit2,exploit3", "-exploit1           -exploit2", "exploit1, exploit2,     exploit3"]
+prompt = [
+    "exploi1,exploit2,exploit3",
+    "-exploit1           -exploit2",
+    "exploit1, exploit2,     exploit3",
+]
 
 # Send the query to the model
 start = time.time()

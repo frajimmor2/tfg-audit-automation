@@ -1,5 +1,6 @@
 import ollama
 import time
+
 # Initialize the Ollama client
 start = time.time()
 client = ollama.Client()
