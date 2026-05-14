@@ -5,7 +5,12 @@ CREATE TABLE IF NOT EXISTS target (
         vendor TEXT NOT NULL,
         product TEXT NOT NULL,
         version TEXT NOT NULL,
-        other_info TEXT NOT NULL
+        other_info TEXT NOT NULL,
+        audit_id INTEGER NOT NULL,
+
+        FOREIGN KEY(audit_id)
+            REFERENCES audit (id)
+            ON DELETE CASCADE
 );
 """
 
@@ -69,12 +74,26 @@ CREATE TABLE IF NOT EXISTS attemp (
 );
 """
 
+
 CREATE_STATS_TABLE = """
 CREATE TABLE IF NOT EXISTS stats (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         model_drift INTEGER NOT NULL,
         total_attemps INTEGER NOT NULL,
-        fail_rate REAL NOT NULL
+        fail_rate REAL NOT NULL,
+        audit_id INTEGER NOT NULL,
+
+        FOREIGN KEY(audit_id)
+            REFERENCES audit (id)
+            ON DELETE CASCADE
+);
+"""
+
+
+CREATE_AUDIT_TABLE = """
+CREATE TABLE IF NOT EXISTS audit (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        date DATE NOT NULL
 );
 """
 
@@ -102,6 +121,11 @@ DROP_ATTEMP = """
 DROP TABLE IF EXISTS attemp;
 """
 
+
 DROP_STATS = """
 DROP TABLE IF EXISTS stats;
+"""
+
+DROP_AUDIT = """
+DROP TABLE IF EXISTS audit;
 """

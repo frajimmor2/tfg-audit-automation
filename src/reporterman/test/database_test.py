@@ -18,6 +18,7 @@ from reporterman.database.database import (
     get_attemp,
     insert_llm_stats,
     get_llm_stats,
+    create_audit,
 )
 
 
@@ -29,6 +30,7 @@ def temp_db(tmp_path, monkeypatch):
     db_file = tmp_path / "test.db"
     monkeypatch.setattr(db, "DB_PATH", str(db_file))
     init_db()
+    create_audit()
     insert_target("192.168.1.11", ["linux", "linux_kernel", "2.6", "info"])  # noqa
 
     return db_file

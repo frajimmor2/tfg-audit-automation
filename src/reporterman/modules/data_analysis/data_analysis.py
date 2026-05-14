@@ -3,6 +3,7 @@ from reporterman.database.database import (
     get_target_id,
     insert_software,
     insert_vulnerability,
+    create_audit,
 )
 from reporterman.ollama_models.llm_handler import (
     soft_obs_handler,
@@ -59,6 +60,8 @@ def get_cve_description(cve_id: str) -> str:
 def data_analysis(input_info: dict) -> dict:
     output = dict()
     targets = list(input_info.keys())
+    create_audit()
+
     for target in targets:
 
         exploits = set()

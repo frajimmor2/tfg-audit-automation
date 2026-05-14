@@ -1,5 +1,6 @@
 import sqlite3
 from pathlib import Path
+from datetime import date
 from reporterman.database.models import (
     CREATE_TARGET_TABLE,
     CREATE_SOFTWARE_TABLE,
@@ -7,6 +8,8 @@ from reporterman.database.models import (
     CREATE_EXPLOIT_TABLE,
     CREATE_ATTEMP_TABLE,
     CREATE_STATS_TABLE,
+    CREATE_AUDIT_TABLE,
+    DROP_AUDIT,
     DROP_TARGET,
     DROP_EXPLOIT,
     DROP_ATTEMP,
@@ -34,6 +37,8 @@ def init_db() -> None:
         connect.execute(DROP_TARGET)
         connect.execute(DROP_ATTEMP)
         connect.execute(DROP_STATS)
+        connect.execute(DROP_AUDIT)
+        connect.execute(CREATE_AUDIT_TABLE)
         connect.execute(CREATE_STATS_TABLE)
         connect.execute(CREATE_TARGET_TABLE)
         connect.execute(CREATE_SOFTWARE_TABLE)
@@ -64,6 +69,15 @@ def get_value(get_cmd: str) -> None:
 
 
 # fmt: off
+def create_audit():
+    now = date.today().isoformat()
+    insert_cmd = """
+    INSERT INTO audit (date) VALUES (?)
+    """
+    params = (now,)
+    insert_value(insert_cmd, params)
+
+
 def insert_target(target: str, target_info: list) -> None:
     insert_cmd = """
     INSERT INTO target (
@@ -71,8 +85,9 @@ def insert_target(target: str, target_info: list) -> None:
         vendor,
         product,
         version,
-        other_info
-    ) VALUES (?, ?, ?, ?, ?);
+        other_info,
+        audit_id
+    ) VALUES (?, ?, ?, ?, ?, ?);
     """
 
     params = (
@@ -80,7 +95,8 @@ def insert_target(target: str, target_info: list) -> None:
         target_info[0],
         target_info[1],
         target_info[2],
-        target_info[3]
+        target_info[3],
+        1
     )
     insert_value(insert_cmd, params)
 
@@ -339,14 +355,16 @@ def insert_llm_stats(drift: int, total_attemps: int, fail_rate: float) -> None:
     INSERT INTO stats (
         model_drift,
         total_attemps,
-        fail_rate
-    ) VALUES (?, ?, ?);
+        fail_rate,
+        audit_id
+    ) VALUES (?, ?, ?, ?);
     """
 
     params = (
         drift,
         total_attemps,
-        fail_rate
+        fail_rate,
+        1
     )
     insert_value(insert_cmd, params)
 
